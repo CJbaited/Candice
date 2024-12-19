@@ -1,5 +1,30 @@
 const { createClient } = require('@supabase/supabase-js');
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY, {
+  auth: {
+    storage: sessionStorage,
+  },
+});
+// Function to log out the user after inactivity
+let inactivityTimeout;
+
+const logoutUser = async () => {
+  await supabase.auth.signOut();
+  alert('You have been logged out due to inactivity.');
+  window.location.reload(); // Redirect to login page
+};
+
+const resetInactivityTimer = () => {
+  clearTimeout(inactivityTimeout);
+  inactivityTimeout = setTimeout(logoutUser, 120 * 60 * 1000); // 30 minutes
+};
+
+// Listen for user activity
+['mousemove', 'keydown', 'click'].forEach((event) => {
+  window.addEventListener(event, resetInactivityTimer);
+});
+
+// Start the inactivity timer
+resetInactivityTimer();
 
 // Sign up
 const signUp = async (req, res) => {

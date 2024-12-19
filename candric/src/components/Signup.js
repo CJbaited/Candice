@@ -8,10 +8,22 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Call the signUpUser API function
       const response = await signUpUser(formData);
-      setMessage(response.data.message);
+      setMessage(response.data.message || 'Signup successful!');
     } catch (error) {
-      setMessage(error.response.data.error || 'Signup failed');
+      // Check if error.response exists
+      if (error.response) {
+        // Log the full error response for debugging
+        console.error('Signup error:', error.response);
+        setMessage(error.response.data.error || 'Signup failed');
+      } else if (error.request) {
+        console.error('No response from server:', error.request);
+        setMessage('No response from the server. Please try again later.');
+      } else {
+        console.error('Error setting up request:', error.message);
+        setMessage('An error occurred during signup.');
+      }
     }
   };
 

@@ -8,7 +8,7 @@ const Dashboard = () => {
     const handleLogout = async () => {
         try {
             await logoutUser();
-            // Perform any client-side cleanup here, if necessary
+            localStorage.removeItem('authToken'); // Clear auth token from local storage
             navigate('/');
         } catch (error) {
             console.error('Logout failed:', error);

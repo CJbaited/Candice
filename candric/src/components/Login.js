@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../api'; // Import loginUser function
+import { loginUser } from '../api';
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
@@ -9,12 +9,14 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { email, password } = formData; // Destructure email and password
+        const { email, password } = formData;
 
         try {
-            // Use loginUser function
             const response = await loginUser({ email, password });
             console.log('Login successful:', response.data);
+
+            // Save auth token to local storage
+            localStorage.setItem('authToken', response.data.token);
 
             // Navigate to dashboard on successful login
             setMessage('Login successful!');

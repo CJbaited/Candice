@@ -5,7 +5,6 @@ const session = require('express-session');
 
 const app = express();
 
-
 // Middleware
 app.use(cors({
   origin: 'http://localhost:3000', // React app URL
@@ -17,7 +16,7 @@ app.use(
     secret: 'your-secret-key', // Replace with a strong, random secret
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Set to true if using HTTPS
+    cookie: { secure: false, sameSite: 'lax' } // Set SameSite attribute
   })
 );
 

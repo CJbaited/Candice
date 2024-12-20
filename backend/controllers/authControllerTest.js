@@ -76,7 +76,6 @@ const login = async (req, res) => {
   res.status(200).json({ message: 'Login successful!', user: data });
 };
 
-// Logout
 const logout = async (req, res) => {
   await supabase.auth.signOut(); // Ensure Supabase logout
   req.session.destroy((err) => {
@@ -86,6 +85,4 @@ const logout = async (req, res) => {
   });
 };
 
-module.exports = { signUp, login };
-
-
+module.exports = { signUp, login, logout };

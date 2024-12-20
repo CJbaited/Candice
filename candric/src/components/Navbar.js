@@ -8,7 +8,7 @@ const Navbar = () => {
         <div className="text-2xl font-bold">Learning Platform</div>
         <div className="space-x-4">
           <Link to="/" className="hover:text-gray-200">Home</Link>
-          <Link to="/courses" className="hover:text-gray-200">Courses</Link>
+          <Link to="/visitor-courses" className="hover:text-gray-200">Courses</Link>
           <Link to="/about" className="hover:text-gray-200">About</Link>
           <Link to="/login" className="hover:text-gray-200">Login</Link>
           <Link to="/signup" className="hover:text-gray-200">Signup</Link>

@@ -16,9 +16,9 @@ const Login = () => {
             const response = await loginUser({ email, password });
             console.log('Login successful:', response.data);
 
-            // Navigate to home page on successful login
+            // Navigate to dashboard on successful login
             setMessage('Login successful!');
-            navigate('/home');
+            navigate('/dashboard');
         } catch (error) {
             if (error.response) {
                 setMessage(error.response.data.message || 'Login failed. Please try again.');
@@ -34,24 +34,30 @@ const Login = () => {
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                />
-                <button type="submit">Login</button>
-            </form>
-            {message && <p>{message}</p>}
+        <div className="flex justify-center items-center min-h-screen bg-gray-100">
+            <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
+                <h2 className="text-2xl font-bold mb-6">Login</h2>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="w-full p-2 mb-4 border rounded"
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={formData.password}
+                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                        className="w-full p-2 mb-4 border rounded"
+                    />
+                    <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+                        Login
+                    </button>
+                </form>
+                {message && <p className="mt-4 text-red-600">{message}</p>}
+            </div>
         </div>
     );
 };

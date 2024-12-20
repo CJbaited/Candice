@@ -10,4 +10,7 @@ export const signUpUser = (data) => API.post('/auth/signup', data);
 // Add user login function
 export const loginUser = (data) => API.post('/auth/login', data);
 
+// Add user logout function
+export const logoutUser = () => API.post('/auth/logout');
+
 export default API;

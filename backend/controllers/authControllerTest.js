@@ -44,21 +44,16 @@ app.use(resetInactivityTimer);
 
 // Sign up
 const signUp = async (req, res) => {
-  const { email, password, name } = req.body;
+  const { email, password, name, location } = req.body;
   const { data, error } = await supabase.auth.signUp(
     { email, password },
-    { data: { name } }
+    { data: { name, location, role: 'student' } } // Include additional metadata
   );
 
   if (error) return res.status(400).json({ error: error.message });
 
   // Save user data in the session
-  req.session.user = { id: data.user.id, email: data.user.email, name };
-
-  // Insert user role into database
-  await supabase
-    .from('users')
-    .insert([{ id: data.user.id, role: 'student' }]);
+  req.session.user = { id: data.user.id, email: data.user.email, name, location };
 
   res.status(201).json({ message: 'User created successfully!', user: data });
 };

@@ -14,6 +14,7 @@ const Loading = () => {
         if (!username || !location) {
           navigate('/complete-profile'); // Redirect to complete profile page
         } else {
+          localStorage.setItem('username', username); // Store username in local storage
           navigate('/dashboard'); // Redirect to dashboard
         }
       } catch (error) {

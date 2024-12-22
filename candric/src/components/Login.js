@@ -17,6 +17,9 @@ const Login = () => {
 
             // Save auth token to local storage
             localStorage.setItem('authToken', response.data.token);
+            
+            // Store user data in local storage
+            localStorage.setItem('userId', response.data.user.id);
 
             // Navigate to dashboard on successful login
             setMessage('Login successful!');

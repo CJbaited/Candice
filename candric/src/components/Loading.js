@@ -10,11 +10,7 @@ const Loading = () => {
       try {
         const response = await checkUser();
         const { username, location, role } = response.data;
-
-        console.log('Username:', username);
-        console.log('Location:', location);
-        console.log('Role:', role);
-
+        
         if (!username || !location) {
           navigate('/complete-profile'); // Redirect to complete profile page
         } else {

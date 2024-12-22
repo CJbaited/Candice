@@ -20,16 +20,16 @@ const Login = () => {
 
             // Navigate to dashboard on successful login
             setMessage('Login successful!');
-            navigate('/dashboard');
+            navigate('/loading'); // Redirect to the loading page
         } catch (error) {
             if (error.response) {
-                setMessage(error.response.data.message || 'Login failed. Please try again.');
+                setMessage(error.response.data.error || 'Login failed');
                 console.error('Error response:', error.response.data);
             } else if (error.request) {
                 setMessage('No response from server. Please try again later.');
                 console.error('Error request:', error.request);
             } else {
-                setMessage('An error occurred. Please try again.');
+                setMessage('An error occurred during login.');
                 console.error('Error message:', error.message);
             }
         }
@@ -46,6 +46,7 @@ const Login = () => {
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         className="w-full p-2 mb-4 border rounded"
+                        required
                     />
                     <input
                         type="password"
@@ -53,6 +54,7 @@ const Login = () => {
                         value={formData.password}
                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                         className="w-full p-2 mb-4 border rounded"
+                        required
                     />
                     <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
                         Login

@@ -11,6 +11,9 @@ import Profile from './components/Profile';
 import VisitorCourses from './components/VisitorCourses'; // Import VisitorCourses component
 import About from './components/About'; // Import About component
 import ProtectedRoute from './components/ProtectedRoute'; // Import ProtectedRoute component
+import VerifyEmail from './components/VerifyEmail'; // Import VerifyEmail component
+import Loading from './components/Loading'; // Import Loading component
+import CompleteProfile from './components/CompleteProfile'; // Import CompleteProfile component
 
 const App = () => {
   return (
@@ -21,12 +24,15 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/verify-email" element={<VerifyEmail />} /> {/* Add VerifyEmail route */}
           <Route path="/dashboard" element={<ProtectedRoute element={Dashboard} />} />
           <Route path="/courses" element={<ProtectedRoute element={Courses} />} />
           <Route path="/materials" element={<ProtectedRoute element={Materials} />} />
           <Route path="/profile" element={<ProtectedRoute element={Profile} />} />
           <Route path="/visitor-courses" element={<VisitorCourses />} /> {/* Add VisitorCourses route */}
           <Route path="/about" element={<About />} /> {/* Add About route */}
+          <Route path="/loading" element={<Loading />} /> {/* Add Loading route */}
+          <Route path="/complete-profile" element={<CompleteProfile />} /> {/* Add CompleteProfile route */}
         </Routes>
       </div>
     </Router>

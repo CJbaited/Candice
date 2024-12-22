@@ -14,4 +14,10 @@ export const loginUser = (data) => API.post('/auth/login', data);
 // Add user logout function
 export const logoutUser = () => API.post('/auth/logout');
 
+// Add check user function
+export const checkUser = () => API.get('/auth/check-user');
+
+// Add update user profile function
+export const updateUserProfile = (data) => API.post('/auth/update-profile', data);
+
 export default API;

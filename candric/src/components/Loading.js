@@ -9,10 +9,12 @@ const Loading = () => {
     const verifyUser = async () => {
       try {
         const response = await checkUser();
-        if (response.data.isTeacher) {
-          navigate('/teacher-dashboard');
+        const { username, location } = response.data;
+
+        if (!username || !location) {
+          navigate('/complete-profile'); // Redirect to complete profile page
         } else {
-          navigate('/dashboard');
+          navigate('/dashboard'); // Redirect to dashboard
         }
       } catch (error) {
         console.error('Error verifying user:', error);

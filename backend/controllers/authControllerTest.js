@@ -95,7 +95,7 @@ const checkUser = async (req, res) => {
   // Fetch user details from the public.profiles table
   const { data: userData, error: userError } = await supabase
     .from('profiles')
-    .select('id, username, location')
+    .select('id, username, location, role') 
     .eq('id', userId)
     .single();
 

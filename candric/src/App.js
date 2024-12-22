@@ -14,6 +14,8 @@ import ProtectedRoute from './components/ProtectedRoute'; // Import ProtectedRou
 import VerifyEmail from './components/VerifyEmail'; // Import VerifyEmail component
 import Loading from './components/Loading'; // Import Loading component
 import CompleteProfile from './components/CompleteProfile'; // Import CompleteProfile component
+import TeacherDashboard from './components/TeacherDashboard'; // Import TeacherDashboard component
+
 
 const App = () => {
   return (
@@ -33,6 +35,7 @@ const App = () => {
           <Route path="/about" element={<About />} /> {/* Add About route */}
           <Route path="/loading" element={<Loading />} /> {/* Add Loading route */}
           <Route path="/complete-profile" element={<CompleteProfile />} /> {/* Add CompleteProfile route */}
+          <Route path="/teacher-dashboard" element={<TeacherDashboard />} /> {/* Add this line */}
         </Routes>
       </div>
     </Router>

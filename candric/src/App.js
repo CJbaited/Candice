@@ -15,7 +15,11 @@ import VerifyEmail from './components/VerifyEmail'; // Import VerifyEmail compon
 import Loading from './components/Loading'; // Import Loading component
 import CompleteProfile from './components/CompleteProfile'; // Import CompleteProfile component
 import TeacherDashboard from './components/TeacherDashboard'; // Import TeacherDashboard component
-
+import TeacherProtectedRoute from './components/TeacherProtectedRoute'; // Import TeacherProtectedRoute component
+import ManageCourses from './components/ManageCourses'; // Import ManageCourses component
+import ManageStudents from './components/ManageStudents'; // Import ManageStudents component
+import ManageMaterials from './components/ManageMaterials'; // Import ManageMaterials component
+import TeacherProfile from './components/TeacherProfile'; // Import TeacherProfile component
 
 const App = () => {
   return (
@@ -35,7 +39,11 @@ const App = () => {
           <Route path="/about" element={<About />} /> {/* Add About route */}
           <Route path="/loading" element={<Loading />} /> {/* Add Loading route */}
           <Route path="/complete-profile" element={<CompleteProfile />} /> {/* Add CompleteProfile route */}
-          <Route path="/teacher-dashboard" element={<TeacherDashboard />} /> {/* Add this line */}
+          <Route path="/teacher-dashboard" element={<TeacherProtectedRoute element={TeacherDashboard} />} /> {/* Protect this route */}
+          <Route path="/manage-courses" element={<TeacherProtectedRoute element={ManageCourses} />} /> {/* Add this line */}
+          <Route path="/manage-students" element={<TeacherProtectedRoute element={ManageStudents} />} /> {/* Add this line */}
+          <Route path="/manage-materials" element={<TeacherProtectedRoute element={ManageMaterials} />} /> {/* Add this line */}
+          <Route path="/teacher-profile" element={<TeacherProtectedRoute element={TeacherProfile} />} /> {/* Add this line */}
         </Routes>
       </div>
     </Router>

@@ -15,11 +15,11 @@ const Footer = () => {
             <Link to="/" className="hover:text-gray-400">Home</Link>
             <Link to="/visitor-courses" className="hover:text-gray-400">Courses</Link>
             <Link to="/about" className="hover:text-gray-400">About</Link>
+            <Link to="/teachers" className="hover:text-gray-400">Teachers</Link>
           </div>
           <div className="flex flex-col space-y-4">
             <h3 className="text-xl font-bold mb-2">Support</h3>
             <Link to="/faq" className="hover:text-gray-400">FAQ</Link>
-            <Link to="/help" className="hover:text-gray-400">Help Center</Link>
             <Link to="/terms" className="hover:text-gray-400">Terms of Service</Link>
             <Link to="/privacy" className="hover:text-gray-400">Privacy Policy</Link>
             <Link to="/contact" className="hover:text-gray-400">Contact</Link>
@@ -30,7 +30,6 @@ const Footer = () => {
             <a href="https://twitter.com" className="hover:text-gray-400">Twitter</a>
             <a href="https://linkedin.com" className="hover:text-gray-400">LinkedIn</a>
             <a href="https://instagram.com" className="hover:text-gray-400">Instagram</a>
-            <Link to="/teachers" className="hover:text-gray-400">Teachers</Link>
           </div>
         </div>
         <div className="mt-8 text-center">

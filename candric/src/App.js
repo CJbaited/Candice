@@ -13,7 +13,6 @@ import VisitorCourses from './components/VisitorCourses';
 import About from './components/About';
 import Contact from './components/Contact';
 import FAQ from './components/FAQ';
-import HelpCenter from './components/HelpCenter';
 import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Teachers from './components/Teachers';
@@ -46,7 +45,6 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
-          <Route path="/help" element={<HelpCenter />} />
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/teachers" element={<Teachers />} />
@@ -66,14 +64,14 @@ const App = () => {
 
 const ConditionalNavbar = () => {
   const location = useLocation();
-  const publicRoutes = ['/', '/login', '/signup', '/visitor-courses', '/about', '/contact', '/faq', '/help', '/terms', '/privacy', '/teachers'];
+  const publicRoutes = ['/', '/login', '/signup', '/visitor-courses', '/about', '/contact', '/faq', '/terms', '/privacy', '/teachers'];
 
   return publicRoutes.includes(location.pathname) ? <Navbar /> : null;
 };
 
 const ConditionalFooter = () => {
   const location = useLocation();
-  const publicRoutes = ['/', '/login', '/signup', '/visitor-courses', '/about', '/contact', '/faq', '/help', '/terms', '/privacy', '/teachers'];
+  const publicRoutes = ['/', '/login', '/signup', '/visitor-courses', '/about', '/contact', '/faq', '/terms', '/privacy', '/teachers'];
 
   return publicRoutes.includes(location.pathname) ? <Footer /> : null;
 };

@@ -20,4 +20,10 @@ export const checkUser = () => API.get('/auth/check-user');
 // Add update user profile function
 export const updateUserProfile = (data) => API.post('/auth/update-profile', data);
 
+// Add courses functions
+export const getCourses = () => API.get('/courses');
+export const createCourse = (data) => API.post('/courses', data);
+export const updateCourse = (id, data) => API.put(`/courses/${id}`, data);
+export const deleteCourse = (id) => API.delete(`/courses/${id}`);
+
 export default API;

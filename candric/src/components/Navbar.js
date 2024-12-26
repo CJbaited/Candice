@@ -25,12 +25,12 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`fixed w-full top-0 z-20 transition-opacity duration-300 ${isScrolled ? 'bg-white bg-opacity-90' : 'bg-white bg-opacity-100'}`}>
+    <nav className={`fixed w-full top-0 z-20 transition-opacity duration-300 ${isScrolled ? 'bg-white bg-opacity-90' : 'bg-transparent'}`}>
       <div className="container mx-auto p-4 flex justify-between items-center">
         <div className="text-2xl font-bold text-[#622240]">Learning Platform</div>
         <div className="flex space-x-4 items-center">
           <Link to="/login" className="hover:text-[#622240]">Login</Link>
-          <Link to="/signup" className="px-4 py-2 border border-[#622240] rounded hover:bg-[#622240] hover:text-white transition-colors">Signup</Link>
+          <Link to="/signup" className="px-4 py-2 border border-[#622240] rounded-lg shadow-lg backdrop-blur-md hover:bg-[#622240] hover:text-white transition-colors">Signup</Link>
           <button onClick={toggleMenu} className="focus:outline-none">
             <svg className="w-6 h-6 text-[#622240]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}></path>

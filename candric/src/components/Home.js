@@ -21,37 +21,34 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Top Section */}
-      <section className="relative h-screen bg-cover bg-center" style={{ backgroundImage: "url('path/to/your/image.jpg')" }}>
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center">
+      <section className="relative h-screen bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url " }}>
+        <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-md"></div>
+        <div className="relative z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-8">Welcome to the Learning Platform</h1>
-          <div className="flex space-x-4 mb-8">
-            <Link to="/visitor-courses" className="px-6 py-3 bg-white text-[#622240] font-semibold rounded hover:bg-[#622240] hover:text-white transition-colors">Start Learning</Link>
-            <Link to="/teachers" className="px-6 py-3 bg-white text-[#622240] font-semibold rounded hover:bg-[#622240] hover:text-white transition-colors">Meet Teachers</Link>
+          <div className="flex space-x-4 mb-8 justify-center">
+            <Link to="/visitor-courses" className="px-6 py-3 bg-white bg-opacity-20 text-white font-semibold rounded-lg shadow-lg backdrop-blur-md hover:bg-opacity-30 transition-colors">Start Learning</Link>
+            <Link to="/teachers" className="px-6 py-3 bg-white bg-opacity-20 text-white font-semibold rounded-lg shadow-lg backdrop-blur-md hover:bg-opacity-30 transition-colors">Meet Teachers</Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full px-4 mt-8">
-            <div className="bg-white bg-opacity-75 p-6 rounded-lg shadow-md text-center">
-              {/* Placeholder for icon */}
+            <div className="bg-white bg-opacity-20 p-6 rounded-lg shadow-lg backdrop-blur-md text-center">
               <div className="text-4xl text-[#622240] mb-4 mx-auto">Icon</div>
-              <h3 className="text-xl font-bold text-[#622240] mb-2">Expert Teachers</h3>
-              <p className="text-[#622240]">Learn from certified professionals</p>
+              <h3 className="text-xl font-bold text-white mb-2">Expert Teachers</h3>
+              <p className="text-white">Learn from certified professionals</p>
             </div>
-            <div className="bg-white bg-opacity-75 p-6 rounded-lg shadow-md text-center">
-              {/* Placeholder for icon */}
+            <div className="bg-white bg-opacity-20 p-6 rounded-lg shadow-lg backdrop-blur-md text-center">
               <div className="text-4xl text-[#622240] mb-4 mx-auto">Icon</div>
-              <h3 className="text-xl font-bold text-[#622240] mb-2">Structured Courses</h3>
-              <p className="text-[#622240]">Follow proven learning paths</p>
+              <h3 className="text-xl font-bold text-white mb-2">Structured Courses</h3>
+              <p className="text-white">Follow proven learning paths</p>
             </div>
-            <div className="bg-white bg-opacity-75 p-6 rounded-lg shadow-md text-center">
-              {/* Placeholder for icon */}
+            <div className="bg-white bg-opacity-20 p-6 rounded-lg shadow-lg backdrop-blur-md text-center">
               <div className="text-4xl text-[#622240] mb-4 mx-auto">Icon</div>
-              <h3 className="text-xl font-bold text-[#622240] mb-2">Interactive Classes</h3>
-              <p className="text-[#622240]">Practice with fellow students</p>
+              <h3 className="text-xl font-bold text-white mb-2">Interactive Classes</h3>
+              <p className="text-white">Practice with fellow students</p>
             </div>
-            <div className="bg-white bg-opacity-75 p-6 rounded-lg shadow-md text-center">
-              {/* Placeholder for icon */}
+            <div className="bg-white bg-opacity-20 p-6 rounded-lg shadow-lg backdrop-blur-md text-center">
               <div className="text-4xl text-[#622240] mb-4 mx-auto">Icon</div>
-              <h3 className="text-xl font-bold text-[#622240] mb-2">24/7 Access</h3>
-              <p className="text-[#622240]">Learn at your own pace</p>
+              <h3 className="text-xl font-bold text-white mb-2">24/7 Access</h3>
+              <p className="text-white">Learn at your own pace</p>
             </div>
           </div>
         </div>
@@ -63,10 +60,11 @@ const Home = () => {
           <h2 className="text-3xl font-bold text-center text-[#622240] mb-8">Featured Courses</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredCourses.map((course) => (
-              <div key={course.id} className="bg-white p-6 rounded-lg shadow-md text-center">
+              <div key={course.id} className="bg-white bg-opacity-20 p-6 rounded-lg shadow-lg backdrop-blur-md text-center">
                 <img src="path/to/your/course-image.jpg" alt={course.title} className="w-full h-48 object-cover rounded-lg mb-4" />
                 <h3 className="text-xl font-bold text-[#622240] mb-2">{course.title}</h3>
-                <Link to="/signup" className="px-6 py-3 bg-[#622240] text-white font-semibold rounded hover:bg-[#501a33] transition-colors">Enroll</Link>
+                <p className="text-gray-700">{course.description}</p>
+                <Link to="/signup" className="px-6 py-3 bg-[#622240] text-white font-semibold rounded-lg shadow-lg hover:bg-[#501a33] transition-colors">Enroll</Link>
               </div>
             ))}
           </div>
@@ -79,12 +77,12 @@ const Home = () => {
           <div className="bg-[#622240] opacity-10 w-full h-full bg-decorative"></div>
         </div>
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between space-y-16 md:space-y-0 md:space-x-16">
-          <div className="bg-white p-8 rounded-lg shadow-lg flex-1 relative z-10 md:mt-16">
+          <div className="bg-white bg-opacity-20 p-8 rounded-lg shadow-lg backdrop-blur-md flex-1 relative z-10 md:mt-16">
             <img src="/path/to/your/image1.jpg" alt="Learning Platform" className="w-full h-48 object-cover rounded-lg mb-4" />
             <h2 className="text-2xl font-bold text-[#622240] mb-4">About Our Platform</h2>
             <p className="text-[#622240]">Our learning platform offers a wide range of courses to help you achieve your educational goals. Whether you're looking to learn a new skill or advance your career, we have something for everyone.</p>
           </div>
-          <div className="bg-white p-8 rounded-lg shadow-lg flex-1 relative z-10 md:mt-32">
+          <div className="bg-white bg-opacity-20 p-8 rounded-lg shadow-lg backdrop-blur-md flex-1 relative z-10 md:mt-32">
             <img src="/path/to/your/image2.jpg" alt="Learning Platform" className="w-full h-48 object-cover rounded-lg mb-4" />
             <h2 className="text-2xl font-bold text-[#622240] mb-4">Why Choose Us?</h2>
             <p className="text-[#622240]">We provide high-quality courses taught by experienced instructors. Our platform is user-friendly and accessible from anywhere, making it easy for you to learn at your own pace.</p>

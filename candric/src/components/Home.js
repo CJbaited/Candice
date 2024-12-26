@@ -21,7 +21,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Top Section */}
-      <section className="relative h-screen bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url " }}>
+      <section className="relative h-screen bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url('/workspaces/Candice/candric/public/helena-lopes-e3OUQGT9bWU-unsplash.jpg')" }}>
         <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-md"></div>
         <div className="relative z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-8">Welcome to the Learning Platform</h1>

@@ -180,7 +180,7 @@ const ManageCourses = () => {
             required
           >
             <option value="" disabled>Select Unit</option>
-            {courses.flatMap(course => course.units).map(unit => (
+            {courses.flatMap(course => course.units || []).map(unit => (
               <option key={unit.id} value={unit.id}>{unit.unit_title}</option>
             ))}
           </select>
@@ -220,7 +220,7 @@ const ManageCourses = () => {
               </button>
               <div className="mt-4">
                 <h4 className="text-lg font-bold mb-2">Materials</h4>
-                {course.materials.map((material) => (
+                {course.materials && course.materials.map((material) => (
                   <div key={material.id} className="flex justify-between items-center mb-2">
                     <a href={material.file_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
                       {material.material_title}

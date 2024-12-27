@@ -55,24 +55,29 @@ const Home = () => {
       </section>
 
       {/* Second Section - Featured Courses */}
-      <section className="py-24 bg-gray-100"> {/* Increased padding */}
+      <section className="h-screen py-24 bg-gray-100 flex flex-col justify-center"> {/* Set height to full viewport */}
         <div className="container mx-auto px-8"> {/* Increased padding */}
           <h2 className="text-3xl font-bold text-center text-[#622240] mb-16">Featured Courses</h2> {/* Increased margin */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16"> {/* Increased gap */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"> {/* Adjusted gap */}
             {featuredCourses.map((course) => (
-              <div key={course.id} className="bg-white p-8 rounded-lg shadow-md text-center"> {/* Increased padding */}
-                <img src="path/to/your/course-image.jpg" alt={course.title} className="w-full h-48 object-cover rounded-lg mb-4" />
+              <div key={course.id} className="bg-white p-8 rounded-lg shadow-lg text-center"> {/* Increased padding */}
+                <img src="path/to/your/course-image.jpg" alt={course.title} className="w-full h-64 object-cover rounded-lg mb-4" /> {/* Increased height */}
                 <h3 className="text-xl font-bold text-[#622240] mb-4">{course.title}</h3> {/* Increased margin */}
                 <p className="text-gray-700 mb-4">{course.description}</p> {/* Increased margin */}
                 <Link to="/signup" className="px-6 py-3 bg-[#622240] text-white font-semibold rounded-lg shadow-lg hover:bg-[#501a33] transition-colors">Enroll</Link>
               </div>
             ))}
           </div>
+          <div className="text-center mt-16"> {/* Added margin-top */}
+            <Link to="/visitor-courses" className="px-6 py-3 bg-[#622240] text-white font-semibold rounded-lg shadow-lg hover:bg-[#501a33] transition-colors">
+              View All Courses
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Third Section - About Our Platform */}
-      <section className="relative py-24 bg-gray-100"> {/* Increased padding */}
+      <section className="relative h-screen py-24 bg-gray-100 flex flex-col justify-center"> {/* Set height to full viewport */}
         <div className="absolute inset-0 flex justify-center items-center">
           <div className="bg-[#622240] opacity-10 w-full h-full bg-decorative"></div>
         </div>

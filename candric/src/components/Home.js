@@ -21,49 +21,49 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Top Section */}
-      <section className="relative h-screen bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url('/workspaces/Candice/candric/public/helena-lopes-e3OUQGT9bWU-unsplash.jpg')" }}>
-        <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-md"></div>
-        <div className="relative z-10 text-center">
+      <section className="relative h-screen bg-cover bg-center flex flex-col items-center justify-center" style={{ backgroundImage: "url('/emma-dau-n_4iTY1KmDE-unsplash.jpg')" }}>
+        <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
+        <div className="relative z-10 text-center mt-32"> {/* Added margin-top to bring down the title and buttons */}
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-8">Welcome to the Learning Platform</h1>
-          <div className="flex space-x-4 mb-8 justify-center">
-            <Link to="/visitor-courses" className="px-6 py-3 bg-white bg-opacity-20 text-white font-semibold rounded-lg shadow-lg backdrop-blur-md hover:bg-opacity-30 transition-colors">Start Learning</Link>
-            <Link to="/teachers" className="px-6 py-3 bg-white bg-opacity-20 text-white font-semibold rounded-lg shadow-lg backdrop-blur-md hover:bg-opacity-30 transition-colors">Meet Teachers</Link>
+          <div className="flex space-x-4 mb-16 justify-center">
+            <Link to="/visitor-courses" className="px-6 py-3 bg-white bg-opacity-20 text-white font-semibold rounded-lg shadow-lg backdrop-blur-md hover:bg-signup transition-colors">Start Learning</Link>
+            <Link to="/teachers" className="px-6 py-3 bg-white bg-opacity-20 text-white font-semibold rounded-lg shadow-lg backdrop-blur-md hover:bg-signup transition-colors">Meet Teachers</Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full px-4 mt-8">
-            <div className="bg-white bg-opacity-20 p-6 rounded-lg shadow-lg backdrop-blur-md text-center">
-              <div className="text-4xl text-[#622240] mb-4 mx-auto">Icon</div>
-              <h3 className="text-xl font-bold text-white mb-2">Expert Teachers</h3>
-              <p className="text-white">Learn from certified professionals</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-24 px-4">
+            <div className="bg-white bg-opacity-20 p-4 rounded-lg shadow-lg backdrop-blur-md text-center">
+              <div className="icon-placeholder mb-4">[Icon]</div>
+              <h3 className="text-lg font-bold text-white mb-2">Quality Education</h3>
+              <p className="text-white">Access high-quality courses designed by experts.</p>
             </div>
-            <div className="bg-white bg-opacity-20 p-6 rounded-lg shadow-lg backdrop-blur-md text-center">
-              <div className="text-4xl text-[#622240] mb-4 mx-auto">Icon</div>
-              <h3 className="text-xl font-bold text-white mb-2">Structured Courses</h3>
-              <p className="text-white">Follow proven learning paths</p>
+            <div className="bg-white bg-opacity-20 p-4 rounded-lg shadow-lg backdrop-blur-md text-center">
+              <div className="icon-placeholder mb-4">[Icon]</div>
+              <h3 className="text-lg font-bold text-white mb-2">Flexible Learning</h3>
+              <p className="text-white">Learn at your own pace, anytime, anywhere.</p>
             </div>
-            <div className="bg-white bg-opacity-20 p-6 rounded-lg shadow-lg backdrop-blur-md text-center">
-              <div className="text-4xl text-[#622240] mb-4 mx-auto">Icon</div>
-              <h3 className="text-xl font-bold text-white mb-2">Interactive Classes</h3>
-              <p className="text-white">Practice with fellow students</p>
+            <div className="bg-white bg-opacity-20 p-4 rounded-lg shadow-lg backdrop-blur-md text-center">
+              <div className="icon-placeholder mb-4">[Icon]</div>
+              <h3 className="text-lg font-bold text-white mb-2">Expert Instructors</h3>
+              <p className="text-white">Learn from industry professionals and experienced teachers.</p>
             </div>
-            <div className="bg-white bg-opacity-20 p-6 rounded-lg shadow-lg backdrop-blur-md text-center">
-              <div className="text-4xl text-[#622240] mb-4 mx-auto">Icon</div>
-              <h3 className="text-xl font-bold text-white mb-2">24/7 Access</h3>
-              <p className="text-white">Learn at your own pace</p>
+            <div className="bg-white bg-opacity-20 p-4 rounded-lg shadow-lg backdrop-blur-md text-center">
+              <div className="icon-placeholder mb-4">[Icon]</div>
+              <h3 className="text-lg font-bold text-white mb-2">Community Support</h3>
+              <p className="text-white">Join a community of learners and get support.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Second Section - Featured Courses */}
-      <section className="py-16 bg-gray-100">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-[#622240] mb-8">Featured Courses</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section className="py-24 bg-gray-100"> {/* Increased padding */}
+        <div className="container mx-auto px-8"> {/* Increased padding */}
+          <h2 className="text-3xl font-bold text-center text-[#622240] mb-16">Featured Courses</h2> {/* Increased margin */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16"> {/* Increased gap */}
             {featuredCourses.map((course) => (
-              <div key={course.id} className="bg-white bg-opacity-20 p-6 rounded-lg shadow-lg backdrop-blur-md text-center">
+              <div key={course.id} className="bg-white p-8 rounded-lg shadow-md text-center"> {/* Increased padding */}
                 <img src="path/to/your/course-image.jpg" alt={course.title} className="w-full h-48 object-cover rounded-lg mb-4" />
-                <h3 className="text-xl font-bold text-[#622240] mb-2">{course.title}</h3>
-                <p className="text-gray-700">{course.description}</p>
+                <h3 className="text-xl font-bold text-[#622240] mb-4">{course.title}</h3> {/* Increased margin */}
+                <p className="text-gray-700 mb-4">{course.description}</p> {/* Increased margin */}
                 <Link to="/signup" className="px-6 py-3 bg-[#622240] text-white font-semibold rounded-lg shadow-lg hover:bg-[#501a33] transition-colors">Enroll</Link>
               </div>
             ))}
@@ -72,18 +72,18 @@ const Home = () => {
       </section>
 
       {/* Third Section - About Our Platform */}
-      <section className="relative py-16 bg-gray-100">
+      <section className="relative py-24 bg-gray-100"> {/* Increased padding */}
         <div className="absolute inset-0 flex justify-center items-center">
           <div className="bg-[#622240] opacity-10 w-full h-full bg-decorative"></div>
         </div>
-        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between space-y-16 md:space-y-0 md:space-x-16">
+        <div className="container mx-auto px-8 flex flex-col md:flex-row items-center justify-between space-y-16 md:space-y-0 md:space-x-16"> {/* Increased padding */}
           <div className="bg-white bg-opacity-20 p-8 rounded-lg shadow-lg backdrop-blur-md flex-1 relative z-10 md:mt-16">
-            <img src="/path/to/your/image1.jpg" alt="Learning Platform" className="w-full h-48 object-cover rounded-lg mb-4" />
+            <img src="/atikh-bana-Ycds6emp7BA-unsplash.jpg" alt="Learning Platform" className="w-full h-48 object-cover rounded-lg mb-4" />
             <h2 className="text-2xl font-bold text-[#622240] mb-4">About Our Platform</h2>
             <p className="text-[#622240]">Our learning platform offers a wide range of courses to help you achieve your educational goals. Whether you're looking to learn a new skill or advance your career, we have something for everyone.</p>
           </div>
           <div className="bg-white bg-opacity-20 p-8 rounded-lg shadow-lg backdrop-blur-md flex-1 relative z-10 md:mt-32">
-            <img src="/path/to/your/image2.jpg" alt="Learning Platform" className="w-full h-48 object-cover rounded-lg mb-4" />
+            <img src="/jason-goodman-Oalh2MojUuk-unsplash.jpg" alt="Learning Platform" className="w-full h-48 object-cover rounded-lg mb-4" />
             <h2 className="text-2xl font-bold text-[#622240] mb-4">Why Choose Us?</h2>
             <p className="text-[#622240]">We provide high-quality courses taught by experienced instructors. Our platform is user-friendly and accessible from anywhere, making it easy for you to learn at your own pace.</p>
           </div>

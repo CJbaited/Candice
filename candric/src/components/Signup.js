@@ -25,9 +25,10 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-6">Signup</h2>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center relative">
+      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/path/to/your/image.jpg')" }}></div>
+      <div className="relative z-10 bg-white bg-opacity-90 p-8 rounded-lg shadow-lg backdrop-blur-md w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">Signup</h2>
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -45,7 +46,7 @@ const Signup = () => {
             className="w-full p-2 mb-4 border rounded"
             required
           />
-          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+          <button type="submit" className="w-full bg-[#622240] text-white py-2 rounded hover:bg-[#501a33] transition-colors">
             Signup
           </button>
         </form>

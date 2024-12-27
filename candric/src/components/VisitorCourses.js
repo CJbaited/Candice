@@ -25,13 +25,13 @@ const VisitorCourses = () => {
       id: 1,
       title: 'Business English',
       description: 'Enhance your business communication skills with our Business English course. Learn how to effectively communicate in professional settings, write business emails, and conduct meetings.',
-      imageUrl: 'path/to/business-english.jpg',
+      imageUrl: '/mimi-thian-lp1AKIUV3yo-unsplash.jpg',
     },
     {
       id: 2,
       title: 'Travel and Conversation English',
       description: 'Prepare for your travels with our Travel and Conversation English course. Learn essential phrases, vocabulary, and conversation skills to navigate through various travel situations.',
-      imageUrl: 'path/to/travel-english.jpg',
+      imageUrl: '/helena-lopes-e3OUQGT9bWU-unsplash.jpg',
     },
   ];
 

@@ -7,7 +7,7 @@ const createCourse = async (req, res) => {
 
   const { data, error } = await supabase
     .from('courses')
-    .insert({ title, description, start_date, time, valid_until });
+    .insert([{ title, description, start_date, time, valid_until }]);
 
   if (error) return res.status(400).json({ error: error.message });
   res.status(201).json({ message: 'Course created successfully!', course: data });
@@ -20,7 +20,7 @@ const updateCourse = async (req, res) => {
 
   const { data, error } = await supabase
     .from('courses')
-    .update({ title, description, start_date, time, valid_until })
+    .update([{ title, description, start_date, time, valid_until }])
     .eq('id', id);
 
   if (error) return res.status(400).json({ error: error.message });
@@ -34,7 +34,8 @@ const deleteCourse = async (req, res) => {
   const { data, error } = await supabase
     .from('courses')
     .delete()
-    .eq('id', id);
+    .eq('id', id)
+    .select();
 
   if (error) return res.status(400).json({ error: error.message });
   res.status(200).json({ message: 'Course deleted successfully!', course: data });
@@ -56,7 +57,7 @@ const enrollCourse = async (req, res) => {
 
   const { data, error } = await supabase
     .from('enrollments')
-    .insert({ course_id: courseId, user_id: userId });
+    .insert([{ course_id: courseId, user_id: userId }]);
 
   if (error) return res.status(400).json({ error: error.message });
   res.status(200).json({ message: 'Enrolled successfully!', enrollment: data });
@@ -81,7 +82,7 @@ const addClass = async (req, res) => {
 
   const { data, error } = await supabase
     .from('classes')
-    .insert({ course_id, unit_title, schedule, material_id });
+    .insert([{ course_id, unit_title, schedule, material_id }]);
 
   if (error) return res.status(400).json({ error: error.message });
   res.status(201).json({ message: 'Class added successfully!', class: data });
@@ -93,7 +94,7 @@ const addMaterial = async (req, res) => {
 
   const { data, error } = await supabase
     .from('materials')
-    .insert({ unit_id, material_title, file_url });
+    .insert([{ unit_id, material_title, file_url }]);
 
   if (error) return res.status(400).json({ error: error.message });
   res.status(201).json({ message: 'Material added successfully!', material: data });

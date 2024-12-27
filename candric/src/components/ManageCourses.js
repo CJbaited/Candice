@@ -5,8 +5,8 @@ import API from '../api';
 const ManageCourses = () => {
   const [courses, setCourses] = useState([]);
   const [formData, setFormData] = useState({ title: '', description: '', start_date: '', time: '', valid_until: '' });
-  const [classData, setClassData] = useState({ course_id: '', unit_title: '', schedule: '', material_id: '' });
-  const [materialData, setMaterialData] = useState({ unit_id: '', material_title: '', file_url: '' });
+  const [classData, setClassData] = useState({ course_id: '', unit_title: '', schedule: '' }); // Removed material_id
+  const [materialData, setMaterialData] = useState({ material_title: '', file_url: '' }); // Removed unit_id
   const [editCourseId, setEditCourseId] = useState(null);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const ManageCourses = () => {
     e.preventDefault();
     try {
       await API.post('/classes', classData);
-      setClassData({ course_id: '', unit_title: '', schedule: '', material_id: '' });
+      setClassData({ course_id: '', unit_title: '', schedule: '' }); // Removed material_id
       fetchCourses();
     } catch (error) {
       console.error('Error adding class:', error);
@@ -67,7 +67,7 @@ const ManageCourses = () => {
     e.preventDefault();
     try {
       await API.post('/materials', materialData);
-      setMaterialData({ unit_id: '', material_title: '', file_url: '' });
+      setMaterialData({ material_title: '', file_url: '' }); // Removed unit_id
       fetchCourses();
     } catch (error) {
       console.error('Error adding material:', error);
@@ -160,30 +160,11 @@ const ManageCourses = () => {
             className="w-full p-2 mb-4 border rounded"
             required
           />
-          <input
-            type="text"
-            placeholder="Material ID"
-            value={classData.material_id}
-            onChange={(e) => setClassData({ ...classData, material_id: e.target.value })}
-            className="w-full p-2 mb-4 border rounded"
-            required
-          />
           <button type="submit" className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
             Add Class
           </button>
         </form>
         <form onSubmit={handleAddMaterial} className="mb-6">
-          <select
-            value={materialData.unit_id}
-            onChange={(e) => setMaterialData({ ...materialData, unit_id: e.target.value })}
-            className="w-full p-2 mb-4 border rounded"
-            required
-          >
-            <option value="" disabled>Select Unit</option>
-            {courses.flatMap(course => course.units || []).map(unit => (
-              <option key={unit.id} value={unit.id}>{unit.unit_title}</option>
-            ))}
-          </select>
           <input
             type="text"
             placeholder="Material Title"

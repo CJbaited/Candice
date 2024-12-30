@@ -4,13 +4,15 @@ import API from '../api';
 
 const ManageCourses = () => {
   const [courses, setCourses] = useState([]);
+  const [availableCourses, setAvailableCourses] = useState([]);
   const [formData, setFormData] = useState({ title: '', description: '', start_date: '', time: '', valid_until: '' });
-  const [classData, setClassData] = useState({ course_id: '', unit_title: '', schedule: '' }); // Removed material_id
+  const [classData, setClassData] = useState({ course_id: '', unit_title: '', schedule: '', material_id: '' });
   const [materialData, setMaterialData] = useState({ material_title: '', file_url: '' }); // Removed unit_id
   const [editCourseId, setEditCourseId] = useState(null);
 
   useEffect(() => {
     fetchCourses();
+    fetchAvailableCourses();
   }, []);
 
   const fetchCourses = async () => {
@@ -19,6 +21,15 @@ const ManageCourses = () => {
       setCourses(response.data);
     } catch (error) {
       console.error('Error fetching courses:', error);
+    }
+  };
+
+  const fetchAvailableCourses = async () => {
+    try {
+      const response = await API.get('/courses/available-courses');
+      setAvailableCourses(response.data);
+    } catch (error) {
+      console.error('Error fetching available courses:', error);
     }
   };
 
@@ -55,8 +66,14 @@ const ManageCourses = () => {
   const handleAddClass = async (e) => {
     e.preventDefault();
     try {
-      await API.post('/classes', classData);
-      setClassData({ course_id: '', unit_title: '', schedule: '' }); // Removed material_id
+      const classDataToSend = {
+        ...classData,
+        course_id: parseInt(classData.course_id, 10),
+        schedule: new Date(classData.schedule).toISOString(),
+        material_id: classData.material_id || null
+      };
+      await API.post('/courses/classes', classDataToSend);
+      setClassData({ course_id: '', unit_title: '', schedule: '', material_id: '' });
       fetchCourses();
     } catch (error) {
       console.error('Error adding class:', error);
@@ -140,7 +157,7 @@ const ManageCourses = () => {
             required
           >
             <option value="" disabled>Select Course</option>
-            {courses.map((course) => (
+            {availableCourses.map((course) => (
               <option key={course.id} value={course.id}>{course.title}</option>
             ))}
           </select>
@@ -159,6 +176,13 @@ const ManageCourses = () => {
             onChange={(e) => setClassData({ ...classData, schedule: e.target.value })}
             className="w-full p-2 mb-4 border rounded"
             required
+          />
+          <input
+            type="text"
+            placeholder="Material ID (optional)"
+            value={classData.material_id}
+            onChange={(e) => setClassData({ ...classData, material_id: e.target.value })}
+            className="w-full p-2 mb-4 border rounded"
           />
           <button type="submit" className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
             Add Class

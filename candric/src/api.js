@@ -26,4 +26,11 @@ export const createCourse = (data) => API.post('/courses', data);
 export const updateCourse = (id, data) => API.put(`/courses/${id}`, data);
 export const deleteCourse = (id) => API.delete(`/courses/${id}`);
 
+// Add classes function
+export const addClass = (data) => API.post('/courses/classes', data);
+
+// Add materials functions
+export const addMaterial = (data) => API.post('/courses/materials', data);
+export const deleteMaterial = (id) => API.delete(`/courses/materials/${id}`);
+
 export default API;

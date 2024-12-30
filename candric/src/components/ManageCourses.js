@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import API from '../api';
+import CourseDetailsModal from './CourseDetailsModal';
 
 const ManageCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -10,8 +11,7 @@ const ManageCourses = () => {
   const [materialData, setMaterialData] = useState({ material_title: '', file_url: '' });
   const [editCourseId, setEditCourseId] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const [classes, setClasses] = useState([]);
-  const [materials, setMaterials] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     fetchCourses();
@@ -33,24 +33,6 @@ const ManageCourses = () => {
       setAvailableCourses(response.data);
     } catch (error) {
       console.error('Error fetching available courses:', error);
-    }
-  };
-
-  const fetchClasses = async (courseId) => {
-    try {
-      const response = await API.get(`/courses/${courseId}/classes`);
-      setClasses(response.data);
-    } catch (error) {
-      console.error('Error fetching classes:', error);
-    }
-  };
-
-  const fetchMaterials = async (classId) => {
-    try {
-      const response = await API.get(`/courses/classes/${classId}/materials`);
-      setMaterials(response.data);
-    } catch (error) {
-      console.error('Error fetching materials:', error);
     }
   };
 
@@ -121,13 +103,9 @@ const ManageCourses = () => {
     }
   };
 
-  const handleViewCourse = async (course) => {
+  const handleViewCourse = (course) => {
     setSelectedCourse(course);
-    await fetchClasses(course.id);
-  };
-
-  const handleViewClass = async (classId) => {
-    await fetchMaterials(classId);
+    setIsModalOpen(true);
   };
 
   return (
@@ -260,36 +238,11 @@ const ManageCourses = () => {
           ))}
         </div>
         {selectedCourse && (
-          <div className="mt-8 bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-4">{selectedCourse.title}</h2>
-            <p className="text-gray-700 mb-4">{selectedCourse.description}</p>
-            <h3 className="text-xl font-bold mb-2">Classes</h3>
-            {classes.length > 0 ? (
-              classes.map((cls) => (
-                <div key={cls.id} className="mb-4">
-                  <h4 className="text-lg font-bold">{cls.unit_title}</h4>
-                  <p className="text-gray-700">Schedule: {cls.schedule}</p>
-                  <button onClick={() => handleViewClass(cls.id)} className="mt-2 bg-blue-600 text-white py-1 px-2 rounded">
-                    View Materials
-                  </button>
-                  <h5 className="text-md font-bold">Materials</h5>
-                  {materials.length > 0 ? (
-                    materials.map((material) => (
-                      <div key={material.id}>
-                        <a href={material.file_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                          {material.material_title}
-                        </a>
-                      </div>
-                    ))
-                  ) : (
-                    <p className="text-gray-700">No materials available</p>
-                  )}
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-700">No classes available</p>
-            )}
-          </div>
+          <CourseDetailsModal
+            isOpen={isModalOpen}
+            onRequestClose={() => setIsModalOpen(false)}
+            course={selectedCourse}
+          />
         )}
       </div>
     </div>

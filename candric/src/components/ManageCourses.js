@@ -7,8 +7,11 @@ const ManageCourses = () => {
   const [availableCourses, setAvailableCourses] = useState([]);
   const [formData, setFormData] = useState({ title: '', description: '', start_date: '', time: '', valid_until: '' });
   const [classData, setClassData] = useState({ course_id: '', unit_title: '', schedule: '', material_id: '' });
-  const [materialData, setMaterialData] = useState({ material_title: '', file_url: '' }); // Removed unit_id
+  const [materialData, setMaterialData] = useState({ material_title: '', file_url: '' });
   const [editCourseId, setEditCourseId] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [classes, setClasses] = useState([]);
+  const [materials, setMaterials] = useState([]);
 
   useEffect(() => {
     fetchCourses();
@@ -30,6 +33,24 @@ const ManageCourses = () => {
       setAvailableCourses(response.data);
     } catch (error) {
       console.error('Error fetching available courses:', error);
+    }
+  };
+
+  const fetchClasses = async (courseId) => {
+    try {
+      const response = await API.get(`/courses/${courseId}/classes`);
+      setClasses(response.data);
+    } catch (error) {
+      console.error('Error fetching classes:', error);
+    }
+  };
+
+  const fetchMaterials = async (classId) => {
+    try {
+      const response = await API.get(`/courses/classes/${classId}/materials`);
+      setMaterials(response.data);
+    } catch (error) {
+      console.error('Error fetching materials:', error);
     }
   };
 
@@ -84,7 +105,7 @@ const ManageCourses = () => {
     e.preventDefault();
     try {
       await API.post('/materials', materialData);
-      setMaterialData({ material_title: '', file_url: '' }); // Removed unit_id
+      setMaterialData({ material_title: '', file_url: '' });
       fetchCourses();
     } catch (error) {
       console.error('Error adding material:', error);
@@ -98,6 +119,15 @@ const ManageCourses = () => {
     } catch (error) {
       console.error('Error deleting material:', error);
     }
+  };
+
+  const handleViewCourse = async (course) => {
+    setSelectedCourse(course);
+    await fetchClasses(course.id);
+  };
+
+  const handleViewClass = async (classId) => {
+    await fetchMaterials(classId);
   };
 
   return (
@@ -223,22 +253,44 @@ const ManageCourses = () => {
               <button onClick={() => handleDelete(course.id)} className="mt-4 bg-red-600 text-white py-2 px-4 rounded">
                 Delete
               </button>
-              <div className="mt-4">
-                <h4 className="text-lg font-bold mb-2">Materials</h4>
-                {course.materials && course.materials.map((material) => (
-                  <div key={material.id} className="flex justify-between items-center mb-2">
-                    <a href={material.file_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                      {material.material_title}
-                    </a>
-                    <button onClick={() => handleDeleteMaterial(material.id)} className="bg-red-600 text-white py-1 px-2 rounded">
-                      Delete
-                    </button>
-                  </div>
-                ))}
-              </div>
+              <button onClick={() => handleViewCourse(course)} className="mt-4 bg-blue-600 text-white py-2 px-4 rounded">
+                View Details
+              </button>
             </div>
           ))}
         </div>
+        {selectedCourse && (
+          <div className="mt-8 bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-2xl font-bold mb-4">{selectedCourse.title}</h2>
+            <p className="text-gray-700 mb-4">{selectedCourse.description}</p>
+            <h3 className="text-xl font-bold mb-2">Classes</h3>
+            {classes.length > 0 ? (
+              classes.map((cls) => (
+                <div key={cls.id} className="mb-4">
+                  <h4 className="text-lg font-bold">{cls.unit_title}</h4>
+                  <p className="text-gray-700">Schedule: {cls.schedule}</p>
+                  <button onClick={() => handleViewClass(cls.id)} className="mt-2 bg-blue-600 text-white py-1 px-2 rounded">
+                    View Materials
+                  </button>
+                  <h5 className="text-md font-bold">Materials</h5>
+                  {materials.length > 0 ? (
+                    materials.map((material) => (
+                      <div key={material.id}>
+                        <a href={material.file_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                          {material.material_title}
+                        </a>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-gray-700">No materials available</p>
+                  )}
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-700">No classes available</p>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

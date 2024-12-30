@@ -131,4 +131,26 @@ const deleteMaterial = async (req, res) => {
   res.status(200).json({ message: 'Material deleted successfully!', material: data });
 };
 
-module.exports = { createCourse, getCourses, enrollCourse, getUserCourses, deleteCourse, updateCourse, addClass, addMaterial, deleteMaterial, getAvailableCourses };
+const getClasses = async (req, res) => {
+  const { courseId } = req.params;
+  const { data, error } = await supabase
+    .from('Classes')
+    .select('*')
+    .eq('course_id', courseId);
+
+  if (error) return res.status(400).json({ error: error.message });
+  res.status(200).json(data);
+};
+
+const getMaterials = async (req, res) => {
+  const { classId } = req.params;
+  const { data, error } = await supabase
+    .from('materials')
+    .select('*')
+    .eq('class_id', classId);
+
+  if (error) return res.status(400).json({ error: error.message });
+  res.status(200).json(data);
+};
+
+module.exports = { createCourse, getCourses, enrollCourse, getUserCourses, deleteCourse, updateCourse, addClass, addMaterial, deleteMaterial, getAvailableCourses, getClasses, getMaterials };

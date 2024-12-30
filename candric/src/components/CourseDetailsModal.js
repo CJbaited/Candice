@@ -5,9 +5,18 @@ import API from '../api';
 const CourseDetailsModal = ({ isOpen, onRequestClose, course }) => {
   const [classes, setClasses] = useState([]);
   const [materials, setMaterials] = useState([]);
+  const [courseData, setCourseData] = useState(course);
+  const [classData, setClassData] = useState({ unit_title: '', schedule: '', material_id: '' });
+  const [materialData, setMaterialData] = useState({ material_title: '', file_url: '' });
+  const [selectedClass, setSelectedClass] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [updateType, setUpdateType] = useState('');
+  const [notification, setNotification] = useState('');
 
   useEffect(() => {
     if (course) {
+      setCourseData(course);
       fetchClasses(course.id);
     }
   }, [course]);
@@ -30,10 +39,125 @@ const CourseDetailsModal = ({ isOpen, onRequestClose, course }) => {
     }
   };
 
+  const handleUpdateCourse = async (e) => {
+    e.preventDefault();
+    try {
+      await API.put(`/courses/${courseData.id}`, courseData);
+      setNotification('Course updated successfully!');
+      setIsUpdateModalOpen(false);
+    } catch (error) {
+      console.error('Error updating course:', error);
+    }
+  };
+
+  const handleUpdateClass = async (e) => {
+    e.preventDefault();
+    try {
+      await API.put(`/courses/classes/${selectedClass.id}`, classData);
+      setNotification('Class updated successfully!');
+      setIsUpdateModalOpen(false);
+      fetchClasses(course.id);
+    } catch (error) {
+      console.error('Error updating class:', error);
+    }
+  };
+
+  const handleDeleteCourse = async () => {
+    try {
+      await API.delete(`/courses/${course.id}`);
+      alert('Course deleted successfully!');
+      onRequestClose();
+    } catch (error) {
+      console.error('Error deleting course:', error);
+    }
+  };
+
+  const handleDeleteClass = async (classId) => {
+    try {
+      await API.delete(`/courses/classes/${classId}`);
+      alert('Class deleted successfully!');
+      fetchClasses(course.id);
+    } catch (error) {
+      console.error('Error deleting class:', error);
+    }
+  };
+
+  const handleDropdownToggle = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const openUpdateModal = (type) => {
+    setUpdateType(type);
+    setIsUpdateModalOpen(true);
+    setDropdownOpen(false);
+  };
+
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel="Course Details">
       <div className="p-6">
-        <h2 className="text-2xl font-bold mb-4">{course?.title}</h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-bold">{course?.title}</h2>
+          <div className="relative">
+            <button onClick={handleDropdownToggle} className="bg-gray-300 text-gray-700 py-2 px-4 rounded">
+              Options
+            </button>
+            {dropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
+                <button
+                  onClick={() => openUpdateModal('course')}
+                  className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                >
+                  Update Course
+                </button>
+                <div className="relative group">
+                  <button
+                    className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  >
+                    Update Class
+                  </button>
+                  <div className="absolute right-full top-0 mt-2 w-48 bg-white border rounded shadow-lg hidden group-hover:block">
+                    {classes.map((cls) => (
+                      <button
+                        key={cls.id}
+                        onClick={() => {
+                          setSelectedClass(cls);
+                          openUpdateModal('class');
+                        }}
+                        className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      >
+                        {cls.unit_title}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <button
+                  onClick={handleDeleteCourse}
+                  className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                >
+                  Delete Course
+                </button>
+                <div className="relative group">
+                  <button
+                    className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  >
+                    Delete Class
+                  </button>
+                  <div className="absolute right-full top-0 mt-2 w-48 bg-white border rounded shadow-lg hidden group-hover:block">
+                    {classes.map((cls) => (
+                      <button
+                        key={cls.id}
+                        onClick={() => handleDeleteClass(cls.id)}
+                        className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      >
+                        {cls.unit_title}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
         <p className="text-gray-700 mb-4">{course?.description}</p>
         <h3 className="text-xl font-bold mb-2">Classes</h3>
         {classes.length > 0 ? (
@@ -64,7 +188,89 @@ const CourseDetailsModal = ({ isOpen, onRequestClose, course }) => {
         <button onClick={onRequestClose} className="mt-4 bg-red-600 text-white py-2 px-4 rounded">
           Close
         </button>
+        {notification && <p className="mt-4 text-green-600">{notification}</p>}
       </div>
+
+      {/* Update Modal */}
+      <Modal isOpen={isUpdateModalOpen} onRequestClose={() => setIsUpdateModalOpen(false)} contentLabel="Update Details">
+        <div className="p-6">
+          <h2 className="text-2xl font-bold mb-4">{updateType === 'course' ? 'Update Course' : 'Update Class'}</h2>
+          <form onSubmit={updateType === 'course' ? handleUpdateCourse : handleUpdateClass}>
+            {updateType === 'course' ? (
+              <>
+                <input
+                  type="text"
+                  placeholder="Title"
+                  value={courseData.title}
+                  onChange={(e) => setCourseData({ ...courseData, title: e.target.value })}
+                  className="w-full p-2 mb-4 border rounded"
+                  required
+                />
+                <textarea
+                  placeholder="Description"
+                  value={courseData.description}
+                  onChange={(e) => setCourseData({ ...courseData, description: e.target.value })}
+                  className="w-full p-2 mb-4 border rounded"
+                  required
+                />
+                <input
+                  type="date"
+                  placeholder="Start Date"
+                  value={courseData.start_date}
+                  onChange={(e) => setCourseData({ ...courseData, start_date: e.target.value })}
+                  className="w-full p-2 mb-4 border rounded"
+                  required
+                />
+                <input
+                  type="time"
+                  placeholder="Time"
+                  value={courseData.time}
+                  onChange={(e) => setCourseData({ ...courseData, time: e.target.value })}
+                  className="w-full p-2 mb-4 border rounded"
+                  required
+                />
+                <input
+                  type="date"
+                  placeholder="Valid Until"
+                  value={courseData.valid_until}
+                  onChange={(e) => setCourseData({ ...courseData, valid_until: e.target.value })}
+                  className="w-full p-2 mb-4 border rounded"
+                  required
+                />
+              </>
+            ) : (
+              <>
+                <input
+                  type="text"
+                  placeholder="Unit Title"
+                  value={classData.unit_title}
+                  onChange={(e) => setClassData({ ...classData, unit_title: e.target.value })}
+                  className="w-full p-2 mb-4 border rounded"
+                  required
+                />
+                <input
+                  type="datetime-local"
+                  placeholder="Schedule"
+                  value={classData.schedule}
+                  onChange={(e) => setClassData({ ...classData, schedule: e.target.value })}
+                  className="w-full p-2 mb-4 border rounded"
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Material ID (optional)"
+                  value={classData.material_id}
+                  onChange={(e) => setClassData({ ...classData, material_id: e.target.value })}
+                  className="w-full p-2 mb-4 border rounded"
+                />
+              </>
+            )}
+            <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+              {updateType === 'course' ? 'Update Course' : 'Update Class'}
+            </button>
+          </form>
+        </div>
+      </Modal>
     </Modal>
   );
 };

@@ -24,7 +24,7 @@ const Sidebar = () => {
   }, []);
 
   useEffect(() => {
-    setIsSidebarOpen(true);
+    setIsSidebarOpen(true); // Keep the sidebar open when the user navigates to a different page
   }, [location.pathname]);
 
   const handleLogout = async () => {
@@ -47,7 +47,7 @@ const Sidebar = () => {
   };
 
   const getLinkClass = (path) =>
-    location.pathname === path ? 'bg-blue-700' : 'hover:bg-blue-700';
+    location.pathname === path ? 'bg-blue-700 text-white' : 'hover:bg-blue-700 hover:text-white';
 
   return (
     <div
@@ -60,7 +60,7 @@ const Sidebar = () => {
       {isSidebarOpen && (
         <>
           <h2 className="text-2xl font-bold mb-1">Welcome,</h2>
-          <h3 className="text-3xl font-bold mb-6">{username}!</h3>
+          <h3 className="text-lg mb-6">{username}!</h3>
           <hr className="border-t border-gray-300 mb-6" />
         </>
       )}

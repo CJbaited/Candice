@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { updateUserProfile } from '../api';
 
 const CompleteProfile = () => {
@@ -25,7 +26,12 @@ const CompleteProfile = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <motion.div
+      className="flex justify-center items-center min-h-screen bg-gray-100"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
         <h2 className="text-2xl font-bold mb-6">Complete Your Profile</h2>
         <form onSubmit={handleSubmit}>
@@ -54,7 +60,7 @@ const CompleteProfile = () => {
         </form>
         {message && <p className="mt-4 text-red-600">{message}</p>}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

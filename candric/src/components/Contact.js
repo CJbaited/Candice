@@ -1,8 +1,14 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const Contact = () => {
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <motion.div
+      className="min-h-screen bg-gray-100 p-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <div className="container mx-auto">
         <h1 className="text-3xl font-bold mb-6">Contact Us</h1>
         <p className="text-gray-700 mb-4">
@@ -18,7 +24,7 @@ const Contact = () => {
           Address: 123 Learning St, Education City, Country
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

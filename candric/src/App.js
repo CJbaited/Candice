@@ -31,7 +31,7 @@ const App = () => {
   return (
     <Router>
       <ConditionalNavbar />
-      <div className="pt-16"> {/* This adds padding to avoid content being hidden behind the navbar */}
+      <div> {/* Removed the padding-top class */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />

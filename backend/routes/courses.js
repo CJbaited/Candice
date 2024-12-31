@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getCourses, getClasses, getMaterials, enrollCourse, createCourse, getUserCourses, deleteCourse, updateCourse, addClass, addMaterial, deleteMaterial, getAvailableCourses } = require('../controllers/courseController');
+const { getCourses, getClasses, getMaterials, enrollCourse, createCourse, getUserCourses, deleteCourse, updateCourse, addClass, addMaterial, deleteMaterial, getAvailableCourses, updateClass, deleteClass } = require('../controllers/courseController');
 
 router.get('/', getCourses); // List available courses
 router.post('/', createCourse); // Create a new course
@@ -10,6 +10,8 @@ router.post('/enroll', enrollCourse); // Enroll in a course
 router.get('/user/:userId', getUserCourses); // Fetch courses a user is enrolled in
 router.get('/available-courses', getAvailableCourses); // Fetch available courses
 router.post('/classes', addClass); // Add a class to a course
+router.put('/classes/:id', updateClass); // Update a class
+router.delete('/classes/:id', deleteClass); // Delete a class
 router.post('/materials', addMaterial); // Add material to a class
 router.delete('/materials/:id', deleteMaterial); // Delete material from a class
 router.get('/:courseId/classes', getClasses); // List classes for a specific course

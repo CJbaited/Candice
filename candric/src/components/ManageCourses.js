@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import API from '../api';
 import CourseDetailsModal from './CourseDetailsModal';
+import Modal from 'react-modal';
 
 const ManageCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -13,6 +14,7 @@ const ManageCourses = () => {
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isAddClassModalOpen, setIsAddClassModalOpen] = useState(false);
 
   useEffect(() => {
     fetchCourses();
@@ -81,7 +83,7 @@ const ManageCourses = () => {
       await API.post('/courses/classes', classDataToSend);
       setClassData({ course_id: '', unit_title: '', schedule: '', material_id: '' });
       fetchCourses();
-      setIsDrawerOpen(false);
+      setIsAddClassModalOpen(false);
     } catch (error) {
       console.error('Error adding class:', error);
     }
@@ -164,7 +166,7 @@ const ManageCourses = () => {
         <div className={`fixed inset-y-0 right-0 transform ${isDrawerOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out bg-white w-80 shadow-lg z-50 overflow-y-auto`}>
           <div className="p-6 h-full">
             <button onClick={toggleDrawer} className="text-gray-600 hover:text-gray-900">
-              Close
+              &times;
             </button>
             <h2 className="text-2xl font-bold mb-4">{editCourseId ? 'Update Course' : 'Add Course'}</h2>
             <form onSubmit={handleSubmit} className="mb-6">

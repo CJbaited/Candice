@@ -106,6 +106,33 @@ const addClass = async (req, res) => {
   res.status(201).json({ message: 'Class added successfully!', class: data });
 };
 
+// Update a class
+const updateClass = async (req, res) => {
+  const { id } = req.params;
+  const { unit_title, schedule, material_id } = req.body;
+
+  const { data, error } = await supabase
+    .from('Classes')
+    .update([{ unit_title, schedule: new Date(schedule).toISOString(), material_id }])
+    .eq('id', id);
+
+  if (error) return res.status(400).json({ error: error.message });
+  res.status(200).json({ message: 'Class updated successfully!', class: data });
+};
+
+// Delete a class
+const deleteClass = async (req, res) => {
+  const { id } = req.params;
+
+  const { data, error } = await supabase
+    .from('Classes')
+    .delete()
+    .eq('id', id);
+
+  if (error) return res.status(400).json({ error: error.message });
+  res.status(200).json({ message: 'Class deleted successfully!', class: data });
+};
+
 // Add material to a class
 const addMaterial = async (req, res) => {
   const { unit_id, material_title, file_url } = req.body;
@@ -153,4 +180,4 @@ const getMaterials = async (req, res) => {
   res.status(200).json(data);
 };
 
-module.exports = { createCourse, getCourses, enrollCourse, getUserCourses, deleteCourse, updateCourse, addClass, addMaterial, deleteMaterial, getAvailableCourses, getClasses, getMaterials };
+module.exports = { createCourse, getCourses, enrollCourse, getUserCourses, deleteCourse, updateCourse, addClass, addMaterial, deleteMaterial, getAvailableCourses, getClasses, getMaterials, updateClass, deleteClass };

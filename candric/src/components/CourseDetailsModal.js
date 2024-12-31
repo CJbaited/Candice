@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
+import { format } from 'date-fns';
 import API from '../api';
 
 const CourseDetailsModal = ({ isOpen, onRequestClose, course }) => {
@@ -11,6 +12,7 @@ const CourseDetailsModal = ({ isOpen, onRequestClose, course }) => {
   const [selectedClass, setSelectedClass] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isAddClassModalOpen, setIsAddClassModalOpen] = useState(false);
   const [updateType, setUpdateType] = useState('');
   const [notification, setNotification] = useState('');
 
@@ -24,7 +26,11 @@ const CourseDetailsModal = ({ isOpen, onRequestClose, course }) => {
   const fetchClasses = async (courseId) => {
     try {
       const response = await API.get(`/courses/${courseId}/classes`);
-      setClasses(response.data);
+      const formattedClasses = response.data.map(cls => ({
+        ...cls,
+        schedule: format(new Date(cls.schedule), 'yyyy-MM-dd HH:mm')
+      }));
+      setClasses(formattedClasses);
     } catch (error) {
       console.error('Error fetching classes:', error);
     }
@@ -53,12 +59,36 @@ const CourseDetailsModal = ({ isOpen, onRequestClose, course }) => {
   const handleUpdateClass = async (e) => {
     e.preventDefault();
     try {
-      await API.put(`/courses/classes/${selectedClass.id}`, classData);
+      const classDataToSend = {
+        ...classData,
+        schedule: new Date(classData.schedule).toISOString(),
+        material_id: classData.material_id || null
+      };
+      await API.put(`/courses/classes/${selectedClass.id}`, classDataToSend);
       setNotification('Class updated successfully!');
       setIsUpdateModalOpen(false);
       fetchClasses(course.id);
     } catch (error) {
       console.error('Error updating class:', error);
+    }
+  };
+
+  const handleAddClass = async (e) => {
+    e.preventDefault();
+    try {
+      const classDataToSend = {
+        ...classData,
+        course_id: course.id,
+        schedule: new Date(classData.schedule).toISOString(),
+        material_id: classData.material_id || null
+      };
+      await API.post('/courses/classes', classDataToSend);
+      setClassData({ unit_title: '', schedule: '', material_id: '' });
+      fetchClasses(course.id);
+      setIsAddClassModalOpen(false);
+      setNotification('Class added successfully!');
+    } catch (error) {
+      console.error('Error adding class:', error);
     }
   };
 
@@ -92,9 +122,17 @@ const CourseDetailsModal = ({ isOpen, onRequestClose, course }) => {
     setDropdownOpen(false);
   };
 
+  const openAddClassModal = () => {
+    setIsAddClassModalOpen(true);
+    setDropdownOpen(false);
+  };
+
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel="Course Details">
-      <div className="p-6">
+      <div className="p-6 relative">
+        <button onClick={onRequestClose} className="absolute top-2 right-2 bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center">
+          &times;
+        </button>
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">{course?.title}</h2>
           <div className="relative">
@@ -108,6 +146,12 @@ const CourseDetailsModal = ({ isOpen, onRequestClose, course }) => {
                   className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
                 >
                   Update Course
+                </button>
+                <button
+                  onClick={openAddClassModal}
+                  className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                >
+                  Add Class
                 </button>
                 <div className="relative group">
                   <button
@@ -185,15 +229,15 @@ const CourseDetailsModal = ({ isOpen, onRequestClose, course }) => {
         ) : (
           <p className="text-gray-700">No classes available</p>
         )}
-        <button onClick={onRequestClose} className="mt-4 bg-red-600 text-white py-2 px-4 rounded">
-          Close
-        </button>
         {notification && <p className="mt-4 text-green-600">{notification}</p>}
       </div>
 
       {/* Update Modal */}
       <Modal isOpen={isUpdateModalOpen} onRequestClose={() => setIsUpdateModalOpen(false)} contentLabel="Update Details">
-        <div className="p-6">
+        <div className="p-6 relative">
+          <button onClick={() => setIsUpdateModalOpen(false)} className="absolute top-2 right-2 bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center">
+            &times;
+          </button>
           <h2 className="text-2xl font-bold mb-4">{updateType === 'course' ? 'Update Course' : 'Update Class'}</h2>
           <form onSubmit={updateType === 'course' ? handleUpdateCourse : handleUpdateClass}>
             {updateType === 'course' ? (
@@ -267,6 +311,44 @@ const CourseDetailsModal = ({ isOpen, onRequestClose, course }) => {
             )}
             <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
               {updateType === 'course' ? 'Update Course' : 'Update Class'}
+            </button>
+          </form>
+        </div>
+      </Modal>
+
+      {/* Add Class Modal */}
+      <Modal isOpen={isAddClassModalOpen} onRequestClose={() => setIsAddClassModalOpen(false)} contentLabel="Add Class">
+        <div className="p-6 relative">
+          <button onClick={() => setIsAddClassModalOpen(false)} className="absolute top-2 right-2 bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center">
+            &times;
+          </button>
+          <h2 className="text-2xl font-bold mb-4">Add Class</h2>
+          <form onSubmit={handleAddClass}>
+            <input
+              type="text"
+              placeholder="Unit Title"
+              value={classData.unit_title}
+              onChange={(e) => setClassData({ ...classData, unit_title: e.target.value })}
+              className="w-full p-2 mb-4 border rounded"
+              required
+            />
+            <input
+              type="datetime-local"
+              placeholder="Schedule"
+              value={classData.schedule}
+              onChange={(e) => setClassData({ ...classData, schedule: e.target.value })}
+              className="w-full p-2 mb-4 border rounded"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Material ID (optional)"
+              value={classData.material_id}
+              onChange={(e) => setClassData({ ...classData, material_id: e.target.value })}
+              className="w-full p-2 mb-4 border rounded"
+            />
+            <button type="submit" className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+              Add Class
             </button>
           </form>
         </div>

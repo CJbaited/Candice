@@ -38,4 +38,7 @@ export const addMaterial = (data) => API.post('/courses/materials', data);
 export const deleteMaterial = (id) => API.delete(`/courses/materials/${id}`);
 export const getMaterials = (classId) => API.get(`/courses/classes/${classId}/materials`);
 
+// Add search students function
+export const searchStudents = (username) => API.get('/auth/search-students', { params: { username } });
+
 export default API;

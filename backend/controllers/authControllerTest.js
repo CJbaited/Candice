@@ -91,7 +91,6 @@ const logout = async (req, res) => {
 
 const checkUser = async (req, res) => {
   const userId = req.session.user.id;
-  console.log('Session User ID:', userId); // Debug log
 
   const { data: userData, error: userError } = await supabase
     .from('profiles')
@@ -125,7 +124,6 @@ const updateUserProfile = async (req, res) => {
 
 const userBalance = async (req, res) => {
   const userId = req.session.user.id;
-  console.log('Session User ID:', userId); // Debug log
 
   const { data: userData, error: userError } = await supabase
     .from('profiles')
@@ -141,4 +139,26 @@ const userBalance = async (req, res) => {
   console.log('User Data:', userData); // Debug log
   res.status(200).json(userData);
 };
-module.exports = { signUp, login, logout, checkUser, updateUserProfile, userBalance };
+
+const searchStudents = async (req, res) => {
+  const { username } = req.query;
+
+  let query = supabase
+    .from('profiles')
+    .select('id, username, location')
+    .is('role', null); // Only fetch students (role = null)
+
+  if (username) {
+    query = query.ilike('username', `%${username}%`);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    return res.status(400).json({ error: error.message });
+  }
+
+  res.status(200).json(data);
+};
+
+module.exports = { signUp, login, logout, checkUser, updateUserProfile, userBalance, searchStudents };

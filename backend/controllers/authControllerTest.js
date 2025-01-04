@@ -91,16 +91,20 @@ const logout = async (req, res) => {
 
 const checkUser = async (req, res) => {
   const userId = req.session.user.id;
+  console.log('Session User ID:', userId); // Debug log
 
-  // Fetch user details from the public.profiles table
   const { data: userData, error: userError } = await supabase
     .from('profiles')
-    .select('id, username, location, role') 
+    .select('id, username, location, role, credits') // Include credits
     .eq('id', userId)
     .single();
 
-  if (userError) return res.status(400).json({ error: userError.message });
+  if (userError) {
+    console.error('Error fetching user data:', userError.message); // Debug log
+    return res.status(400).json({ error: userError.message });
+  }
 
+  console.log('User Data:', userData); // Debug log
   res.status(200).json(userData);
 };
 
@@ -119,4 +123,22 @@ const updateUserProfile = async (req, res) => {
   res.status(200).json({ message: 'Profile updated successfully!', user: data });
 };
 
-module.exports = { signUp, login, logout, checkUser, updateUserProfile };
+const userBalance = async (req, res) => {
+  const userId = req.session.user.id;
+  console.log('Session User ID:', userId); // Debug log
+
+  const { data: userData, error: userError } = await supabase
+    .from('profiles')
+    .select('credits') // Include credits
+    .eq('id', userId)
+    .single();
+
+  if (userError) {
+    console.error('Error fetching user data:', userError.message); // Debug log
+    return res.status(400).json({ error: userError.message });
+  }
+
+  console.log('User Data:', userData); // Debug log
+  res.status(200).json(userData);
+};
+module.exports = { signUp, login, logout, checkUser, updateUserProfile, userBalance };

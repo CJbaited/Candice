@@ -16,6 +16,7 @@ export const logoutUser = () => API.post('/auth/logout');
 
 // Add check user function
 export const checkUser = () => API.get('/auth/check-user');
+export const userBalance = () => API.get('/auth/user-balance');
 
 // Add update user profile function
 export const updateUserProfile = (data) => API.post('/auth/update-profile', data);

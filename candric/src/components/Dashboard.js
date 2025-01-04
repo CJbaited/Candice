@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Sidebar from './Sidebar';
-import { logoutUser } from '../api';
-import { CircleArrowUp, CloudSunRain } from 'lucide-react';
+import { logoutUser, getCourses, checkUser, userBalance } from '../api';
+import { CircleArrowUp, CloudSunRain, PlusCircle } from 'lucide-react';
+import StudentCourseDetailsModal from './StudentCourseDetailsModal';
 
 const WeatherCard = () => {
   return (
@@ -33,6 +34,45 @@ const WeatherCard = () => {
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [credits, setCredits] = useState(0);
+  const [courses, setCourses] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [message, setMessage] = useState('');
+  const [role, setRole] = useState('');
+
+  useEffect(() => {
+    fetchUserData();
+    fetchCourses();
+    fetchUserBalance();
+  }, []);
+
+  const fetchUserData = async () => {
+    try {
+      const response = await checkUser();
+      setRole(response.data.role);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+
+  const fetchUserBalance = async () => {
+    try {
+      const response = await userBalance();
+      setCredits(response.data.credits);
+    } catch (error) {
+      console.error('Error fetching user balance:', error); 
+    }
+  };
+
+  const fetchCourses = async () => {
+    try {
+      const response = await getCourses();
+      setCourses(response.data);
+    } catch (error) {
+      console.error('Error fetching courses:', error);
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -42,6 +82,11 @@ const Dashboard = () => {
     } catch (error) {
       console.error('Logout failed:', error);
     }
+  };
+
+  const handleViewCourse = (course) => {
+    setSelectedCourse(course);
+    setIsModalOpen(true);
   };
 
   return (
@@ -54,35 +99,31 @@ const Dashboard = () => {
         exit={{ opacity: 0 }}
       >
         <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex items-center">
+            <h2 className="text-xl font-bold">Credits: {credits}</h2>
+            {role !== 'teacher' && (
+              <PlusCircle
+                className="ml-2 text-blue-600 cursor-pointer"
+                onClick={() => navigate('/top-up')}
+              />
+            )}
+          </div>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <WeatherCard />
-          <motion.div
-            className="bg-white p-6 rounded-lg shadow-md"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => navigate('/courses')}
-          >
-            <h2 className="text-xl font-bold mb-2">Courses</h2>
-            <p className="text-gray-700">View and manage your courses</p>
-          </motion.div>
-          <motion.div
-            className="bg-white p-6 rounded-lg shadow-md"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => navigate('/materials')}
-          >
-            <h2 className="text-xl font-bold mb-2">Materials</h2>
-            <p className="text-gray-700">Access course materials</p>
-          </motion.div>
-          <motion.div
-            className="bg-white p-6 rounded-lg shadow-md"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => navigate('/profile')}
-          >
-            <h2 className="text-xl font-bold mb-2">Profile</h2>
-            <p className="text-gray-700">View and edit your profile</p>
-          </motion.div>
+          {courses.map((course) => (
+            <motion.div
+              key={course.id}
+              className="bg-white p-6 rounded-lg shadow-md"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleViewCourse(course)}
+            >
+              <h2 className="text-xl font-bold mb-2">{course.title}</h2>
+              <p className="text-gray-700">{course.description}</p>
+            </motion.div>
+          ))}
           <motion.div
             className="bg-red-600 text-white p-6 rounded-lg shadow-md"
             whileHover={{ scale: 1.05 }}
@@ -93,6 +134,15 @@ const Dashboard = () => {
             <p>Sign out of your account</p>
           </motion.div>
         </div>
+        {selectedCourse && role !== 'teacher' && (
+          <StudentCourseDetailsModal
+            isOpen={isModalOpen}
+            onRequestClose={() => setIsModalOpen(false)}
+            course={selectedCourse}
+            credits={credits}
+          />
+        )}
+        {message && <p className="mt-4 text-red-600">{message}</p>}
       </motion.div>
     </div>
   );

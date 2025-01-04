@@ -161,4 +161,64 @@ const searchStudents = async (req, res) => {
   res.status(200).json(data);
 };
 
-module.exports = { signUp, login, logout, checkUser, updateUserProfile, userBalance, searchStudents };
+const addCredits = async (req, res) => {
+  const { userId, credits } = req.body;
+
+  // Validate input
+  if (!userId || typeof credits !== 'number') {
+    return res.status(400).json({ error: 'Invalid input. Please provide a valid userId and credits.' });
+  }
+
+  // Ensure credits is an integer
+  const creditsInt = parseInt(credits, 10);
+
+  const { data, error } = await supabase.rpc('increment_credits', { user_id: userId, amount: creditsInt });
+
+  if (error) {
+    return res.status(400).json({ error: error.message });
+  }
+
+  res.status(200).json({ message: 'Credits added successfully!', user: data });
+};
+
+const removeCredits = async (req, res) => {
+  const { userId, credits } = req.body;
+
+  // Validate input
+  if (!userId || typeof credits !== 'number') {
+    return res.status(400).json({ error: 'Invalid input. Please provide a valid userId and credits.' });
+  }
+
+  // Ensure credits is an integer
+  const creditsInt = parseInt(credits, 10);
+
+  const { data, error } = await supabase.rpc('increment_credits', { user_id: userId, amount: -creditsInt });
+
+  if (error) {
+    return res.status(400).json({ error: error.message });
+  }
+
+  res.status(200).json({ message: 'Credits removed successfully!', user: data });
+};
+
+const sendPasswordResetLink = async (req, res) => {
+  const { email } = req.body;
+
+  const { error } = await supabase.auth.api.resetPasswordForEmail(email);
+
+  if (error) return res.status(400).json({ error: error.message });
+
+  res.status(200).json({ message: 'Password reset link sent successfully!' });
+};
+
+const deleteUser = async (req, res) => {
+  const { userId } = req.body;
+
+  const { error } = await supabase.auth.api.deleteUser(userId);
+
+  if (error) return res.status(400).json({ error: error.message });
+
+  res.status(200).json({ message: 'User deleted successfully!' });
+};
+
+module.exports = { signUp, login, logout, checkUser, updateUserProfile, userBalance, searchStudents, addCredits, removeCredits, sendPasswordResetLink, deleteUser };

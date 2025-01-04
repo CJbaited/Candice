@@ -21,6 +21,16 @@ export const userBalance = () => API.get('/auth/user-balance');
 // Add update user profile function
 export const updateUserProfile = (data) => API.post('/auth/update-profile', data);
 
+// Add credits functions
+export const addCredits = (data) => API.post('/auth/add-credits', data);
+export const removeCredits = (data) => API.post('/auth/remove-credits', data);
+
+// Add password reset function
+export const sendPasswordResetLink = (data) => API.post('/auth/send-password-reset-link', data);
+
+// Add delete user function
+export const deleteUser = (data) => API.post('/auth/delete-user');
+
 // Add courses functions
 export const getCourses = () => API.get('/courses');
 export const createCourse = (data) => API.post('/courses', data);

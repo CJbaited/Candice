@@ -10,7 +10,7 @@ html, body {
 
 body {
   margin: 0;
-  padding: 0; /* Ensure no padding */
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -24,7 +24,7 @@ code {
 }
 
 nav {
-  transition: background-color 0.3s, opacity 0.3s;
+  transition: background-color 0.3s, opacity 0.3s, height 0.3s;
 }
 
 .bg-accent {
@@ -215,19 +215,24 @@ footer p {
   width: 100%;
   top: 0;
   left: 0;
-  transition: background-color 0.3s ease, opacity 0.3s ease;
-  background-color: white; /* Initial white background */
+  transition: background-color 0.3s ease, opacity 0.3s ease, height 0.3s ease;
+  background-color: transparent; /* Initial transparent background */
   opacity: 1; /* Ensure the navbar is visible by default */
   z-index: 20; /* Ensure the navbar is above other content */
+  height: 4rem; /* Initial height */
 }
 
-.navbar.scrolled {
-  background-color: rgba(255, 255, 255, 0.5); /* Transparent background on scroll */
+.navbar:hover {
+  background-color: white; /* White background on hover */
+  height: 5rem; /* Taller height on hover */
 }
 
-.navbar:hover,
+.navbar:hover .hover\:scale-110 {
+  transform: scale(1.1); /* Scale up buttons on hover */
+}
+
 .navbar.open {
-  background-color: white; /* White background on hover or when menu is open */
+  background-color: white; /* White background when menu is open */
   opacity: 1;
 }
 
@@ -254,4 +259,11 @@ footer p {
 .overlay.open {
   opacity: 1;
   pointer-events: auto; /* Allow interaction with the overlay */
+}
+
+/* Apply frosted glass effect to sections */
+.frosted-glass {
+  background-color: rgba(255, 255, 255, 0.1); /* More transparent background */
+  backdrop-filter: blur(10px); /* Frosted glass effect */
+  -webkit-backdrop-filter: blur(10px); /* Frosted glass effect for Safari */
 }

@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { signUpUser } from '../api';
 
 const Signup = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({ email: '', password: '', confirmPassword: '' });
   const [message, setMessage] = useState('');
+  const [acceptPolicy, setAcceptPolicy] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      setMessage('Passwords do not match');
+      return;
+    }
+    if (!acceptPolicy) {
+      setMessage('You must accept the policy and terms of service');
+      return;
+    }
     try {
-      const response = await signUpUser(formData);
+      const response = await signUpUser({ email: formData.email, password: formData.password });
       setMessage(response.data.message || 'Signup successful!');
       navigate('/verify-email', { state: { fromSignup: true } }); // Pass state
     } catch (error) {
@@ -25,13 +34,16 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 relative">
-      <div className="absolute inset-0 flex items-center justify-center">
-        <img src="/dylan-gillis-KdeqA3aTnBY-unsplash.jpg" alt="Background" className="w-full h-full object-cover" />
+    <div className="min-h-screen flex">
+      <div className="w-1/2">
+        <img src="/surface-91HFUXYi_Jg-unsplash.jpg" alt="Background" className="w-full h-full object-cover" />
       </div>
-      <div className="relative z-10 flex items-center justify-end w-full max-w-4xl p-8">
-        <div className="bg-white bg-opacity-90 p-8 rounded shadow-md w-full max-w-sm">
-          <h2 className="text-2xl font-bold mb-6 text-center">Signup</h2>
+      <div className="w-1/2 flex items-start justify-center bg-white pt-32">
+        <div className="p-8 w-full max-w-md">
+          <div className="flex justify-center mb-6">
+            <img src="/path/to/your/logo.png" alt="Logo" className="h-16" />
+          </div>
+          <h2 className="text-2xl font-bold mb-6 text-center">Sign up</h2>
           <form onSubmit={handleSubmit}>
             <input
               type="email"
@@ -49,8 +61,29 @@ const Signup = () => {
               className="w-full p-2 mb-4 border rounded"
               required
             />
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+              className="w-full p-2 mb-4 border rounded"
+              required
+            />
+            <div className="flex items-center mb-4">
+              <input
+                type="checkbox"
+                checked={acceptPolicy}
+                onChange={(e) => setAcceptPolicy(e.target.checked)}
+                className="mr-2"
+                required
+              />
+              <label className="text-gray-700">I accept the <Link to="/policy" className="text-[#622240] underline">Policy</Link> and <Link to="/tos" className="text-[#622240] underline">Terms of Service</Link></label>
+            </div>
+            <div className="text-center mb-4">
+              <Link to="/login" className="text-[#622240] underline">Already have an account? Login</Link>
+            </div>
             <button type="submit" className="w-full bg-[#622240] text-white py-2 rounded hover:bg-[#501a33] transition-colors">
-              Signup
+              Sign up
             </button>
           </form>
           {message && <p className="mt-4 text-red-600">{message}</p>}
@@ -61,3 +94,4 @@ const Signup = () => {
 };
 
 export default Signup;
+

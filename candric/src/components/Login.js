@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { loginUser } from '../api';
 
 const Login = () => {
@@ -39,12 +39,15 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 relative">
-            <div className="absolute inset-0 flex items-center justify-center">
-                <img src="/dylan-gillis-KdeqA3aTnBY-unsplash.jpg" alt="Background" className="w-full h-full object-cover" />
+        <div className="min-h-screen flex">
+            <div className="w-1/2">
+                <img src="/surface-91HFUXYi_Jg-unsplash.jpg" alt="Background" className="w-full h-full object-cover" />
             </div>
-            <div className="relative z-10 flex items-center justify-end w-full max-w-4xl p-8">
-                <div className="bg-white bg-opacity-90 p-8 rounded shadow-md w-full max-w-sm">
+            <div className="w-1/2 flex items-start justify-center bg-white pt-48">
+                <div className="p-8 w-full max-w-md">
+                    <div className="flex justify-center mb-6">
+                        <img src="/path/to/your/logo.png" alt="Logo" className="h-16" />
+                    </div>
                     <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
                     <form onSubmit={handleSubmit}>
                         <input
@@ -68,6 +71,9 @@ const Login = () => {
                         </button>
                     </form>
                     {message && <p className="mt-4 text-red-600">{message}</p>}
+                    <div className="text-center mt-4">
+                        <Link to="/signup" className="text-[#622240] underline">Don't have an account? Sign up</Link>
+                    </div>
                 </div>
             </div>
         </div>

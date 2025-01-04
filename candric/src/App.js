@@ -31,7 +31,7 @@ const App = () => {
   return (
     <Router>
       <ConditionalNavbar />
-      <div className="pt-16"> {/* This adds padding to avoid content being hidden behind the navbar */}
+      <div> {/* This adds padding to avoid content being hidden behind the navbar */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -64,14 +64,14 @@ const App = () => {
 
 const ConditionalNavbar = () => {
   const location = useLocation();
-  const publicRoutes = ['/', '/login', '/signup', '/visitor-courses', '/about', '/contact', '/faq', '/terms', '/privacy', '/teachers'];
+  const publicRoutes = ['/', '/visitor-courses', '/about', '/contact', '/faq', '/terms', '/privacy', '/teachers'];
 
   return publicRoutes.includes(location.pathname) ? <Navbar /> : null;
 };
 
 const ConditionalFooter = () => {
   const location = useLocation();
-  const publicRoutes = ['/', '/login', '/signup', '/visitor-courses', '/about', '/contact', '/faq', '/terms', '/privacy', '/teachers'];
+  const publicRoutes = ['/', '/visitor-courses', '/about', '/contact', '/faq', '/terms', '/privacy', '/teachers'];
 
   return publicRoutes.includes(location.pathname) ? <Footer /> : null;
 };

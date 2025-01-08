@@ -26,10 +26,12 @@ import ManageCourses from './components/ManageCourses';
 import ManageStudents from './components/ManageStudents';
 import ManageMaterials from './components/ManageMaterials';
 import TeacherProfile from './components/TeacherProfile';
+import ScrollToTop from './components/ScrollToTop'; // Import the ScrollToTop component
 
 const App = () => {
   return (
     <Router>
+      <ScrollToTop /> {/* Add ScrollToTop component here */}
       <ConditionalNavbar />
       <div> {/* This adds padding to avoid content being hidden behind the navbar */}
         <Routes>

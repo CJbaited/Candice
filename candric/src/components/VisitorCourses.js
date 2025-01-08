@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const VisitorCourses = () => {
   const [featuredCourses, setFeaturedCourses] = useState([]);
@@ -35,6 +36,11 @@ const VisitorCourses = () => {
     },
   ];
 
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       {/* Featured Courses Section */}
@@ -55,16 +61,24 @@ const VisitorCourses = () => {
       </section>
 
       {/* Learning Path Section */}
-      <section className="py-16">
+      <section className="min-h-screen flex items-center py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-[#622240] mb-8">Learning Path</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {learningPathCourses.map((course) => (
-              <div key={course.id} className="bg-white p-6 rounded-lg shadow-md text-center">
-                <img src={course.imageUrl} alt={course.title} className="w-full h-48 object-cover rounded-lg mb-4" />
+            {learningPathCourses.map((course, index) => (
+              <motion.div
+                key={course.id}
+                className="bg-white p-6 rounded-lg shadow-md text-center"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: index * 0.5 }}
+                variants={cardVariants}
+              >
+                <img src={course.imageUrl} alt={course.title} className="w-full h-64 object-cover rounded-lg mb-4" />
                 <h3 className="text-2xl font-bold text-[#622240] mb-4">{course.title}</h3>
                 <p className="text-gray-700">{course.description}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

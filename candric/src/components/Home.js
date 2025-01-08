@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { BookOpen, Video, Clipboard, FileText, Users, LayoutDashboard } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Home = () => {
   const [featuredCourses, setFeaturedCourses] = useState([]);
@@ -30,6 +32,16 @@ const Home = () => {
     };
   }, []);
 
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  const sectionVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0 },
+  };
+
   return (
     <div className="min-h-screen parallax">
       {/* Top Section */}
@@ -45,22 +57,30 @@ const Home = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-24 px-4">
             <div className="bg-white bg-opacity-20 p-4 border border-white rounded-lg shadow-lg backdrop-blur-md text-center">
-              <div className="icon-placeholder mb-4">[Icon]</div>
+              <div className="icon-placeholder mb-4">
+                <BookOpen className="w-12 h-12 text-white mx-auto" />
+              </div>
               <h3 className="text-lg font-bold text-white mb-2">Quality Education</h3>
               <p className="text-white">Access high-quality courses designed by experts.</p>
             </div>
             <div className="bg-white bg-opacity-20 p-4 border border-white rounded-lg shadow-lg backdrop-blur-md text-center">
-              <div className="icon-placeholder mb-4">[Icon]</div>
+              <div className="icon-placeholder mb-4">
+                <Video className="w-12 h-12 text-white mx-auto" />
+              </div>
               <h3 className="text-lg font-bold text-white mb-2">Flexible Learning</h3>
               <p className="text-white">Learn at your own pace, anytime, anywhere.</p>
             </div>
             <div className="bg-white bg-opacity-20 p-4 border border-white rounded-lg shadow-lg backdrop-blur-md text-center">
-              <div className="icon-placeholder mb-4">[Icon]</div>
+              <div className="icon-placeholder mb-4">
+                <Clipboard className="w-12 h-12 text-white mx-auto" />
+              </div>
               <h3 className="text-lg font-bold text-white mb-2">Expert Instructors</h3>
               <p className="text-white">Learn from industry professionals and experienced teachers.</p>
             </div>
             <div className="bg-white bg-opacity-20 p-4 border border-white rounded-lg shadow-lg backdrop-blur-md text-center">
-              <div className="icon-placeholder mb-4">[Icon]</div>
+              <div className="icon-placeholder mb-4">
+                <FileText className="w-12 h-12 text-white mx-auto" />
+              </div>
               <h3 className="text-lg font-bold text-white mb-2">Community Support</h3>
               <p className="text-white">Join a community of learners and get support.</p>
             </div>
@@ -69,7 +89,14 @@ const Home = () => {
       </section>
 
       {/* New Section - Learn English the Fun Way */}
-      <section className="min-h-screen py-24 flex flex-col justify-center">
+      <motion.section
+        className="min-h-screen py-24 flex flex-col justify-center"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        variants={sectionVariants}
+      >
         <div className="container mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="flex flex-col items-center justify-center">
             <img src="/emma-dau-n_4iTY1KmDE-unsplash.jpg" alt="Graphic 1" className="w-full h-full object-cover rounded-lg mb-4 animate-fade-in" />
@@ -86,36 +113,96 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
-
+      </motion.section>
+  
       {/* Third Section - Features */}
       <section className="min-h-screen py-24 flex flex-col justify-center">
         <div className="container mx-auto px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow-lg text-center h-64">
-              <div className="icon-placeholder mb-4">[Icon 1]</div>
-              <p className="text-gray-700">Feature 1 description goes here.</p>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-lg text-center h-64">
-              <div className="icon-placeholder mb-4">[Icon 2]</div>
-              <p className="text-gray-700">Feature 2 description goes here.</p>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-lg text-center h-64">
-              <div className="icon-placeholder mb-4">[Icon 3]</div>
-              <p className="text-gray-700">Feature 3 description goes here.</p>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-lg text-center h-64">
-              <div className="icon-placeholder mb-4">[Icon 4]</div>
-              <p className="text-gray-700">Feature 4 description goes here.</p>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-lg text-center h-64">
-              <div className="icon-placeholder mb-4">[Icon 5]</div>
-              <p className="text-gray-700">Feature 5 description goes here.</p>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-lg text-center h-64">
-              <div className="icon-placeholder mb-4">[Icon 6]</div>
-              <p className="text-gray-700">Feature 6 description goes here.</p>
-            </div>
+            <motion.div
+              className="bg-white p-8 rounded-lg shadow-lg text-center h-64"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              variants={cardVariants}
+            >
+              <div className="icon-placeholder mb-4">
+                <BookOpen className="w-12 h-12 text-[#622240] mx-auto" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Live Classes</h3>
+              <p className="text-gray-700">Schedule and attend live classes each week and receive attendance points.</p>
+            </motion.div>
+            <motion.div
+              className="bg-white p-8 rounded-lg shadow-lg text-center h-64"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              variants={cardVariants}
+            >
+              <div className="icon-placeholder mb-4">
+                <Video className="w-12 h-12 text-[#622240] mx-auto" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Class Recordings</h3>
+              <p className="text-gray-700">Not able to meet for the live classes? No need to stress, class recordings are held for each class.</p>
+            </motion.div>
+            <motion.div
+              className="bg-white p-8 rounded-lg shadow-lg text-center h-64"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              variants={cardVariants}
+            >
+              <div className="icon-placeholder mb-4">
+                <Clipboard className="w-12 h-12 text-[#622240] mx-auto" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Assignments</h3>
+              <p className="text-gray-700">You'll receive assignments to complement your learning.</p>
+            </motion.div>
+            <motion.div
+              className="bg-white p-8 rounded-lg shadow-lg text-center h-64"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              variants={cardVariants}
+            >
+              <div className="icon-placeholder mb-4">
+                <FileText className="w-12 h-12 text-[#622240] mx-auto" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Materials</h3>
+              <p className="text-gray-700">Materials and resources to help you study for the next level.</p>
+            </motion.div>
+            <motion.div
+              className="bg-white p-8 rounded-lg shadow-lg text-center h-64"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              variants={cardVariants}
+            >
+              <div className="icon-placeholder mb-4">
+                <Users className="w-12 h-12 text-[#622240] mx-auto" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Interactive</h3>
+              <p className="text-gray-700">Classes are fully interactive, you may be split into groups, raise hand for questions, games and more.</p>
+            </motion.div>
+            <motion.div
+              className="bg-white p-8 rounded-lg shadow-lg text-center h-64"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              variants={cardVariants}
+            >
+              <div className="icon-placeholder mb-4">
+                <LayoutDashboard className="w-12 h-12 text-[#622240] mx-auto" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Dashboard</h3>
+              <p className="text-gray-700">A intuitive and fast dashboard to elevate your learning experience.</p>
+            </motion.div>
           </div>
         </div>
       </section>

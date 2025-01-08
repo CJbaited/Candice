@@ -41,7 +41,7 @@ const Signup = () => {
       <div className="w-1/2 flex items-start justify-center bg-white pt-32">
         <div className="p-8 w-full max-w-md">
           <div className="flex justify-center mb-6">
-            <img src="/path/to/your/logo.png" alt="Logo" className="h-16" />
+            <img src="/IMG_0104.png" alt="Logo" className="h-16" />
           </div>
           <h2 className="text-2xl font-bold mb-6 text-center">Sign up</h2>
           <form onSubmit={handleSubmit}>

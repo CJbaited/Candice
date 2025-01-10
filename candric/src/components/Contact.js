@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +21,12 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <motion.div
+      className="min-h-screen bg-gray-100 p-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <div className="container mx-auto">
         <section className="flex flex-col justify-center items-center min-h-[50vh]">
           <h1 className="text-3xl font-bold mb-4">Send us a message through this form</h1>
@@ -94,7 +100,7 @@ const Contact = () => {
           </form>
         </section>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

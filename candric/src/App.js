@@ -34,7 +34,7 @@ const App = () => {
     <Router>
       <ScrollToTop /> {/* Add ScrollToTop component here */}
       <ConditionalNavbar />
-      <div> {/* This adds padding to avoid content being hidden behind the navbar */}
+      <div> {/* Removed the padding-top class */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />

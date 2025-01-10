@@ -247,8 +247,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* Other sections will go here */}
     </div>
   );
 };

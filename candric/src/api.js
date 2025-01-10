@@ -16,9 +16,20 @@ export const logoutUser = () => API.post('/auth/logout');
 
 // Add check user function
 export const checkUser = () => API.get('/auth/check-user');
+export const userBalance = () => API.get('/auth/user-balance');
 
 // Add update user profile function
 export const updateUserProfile = (data) => API.post('/auth/update-profile', data);
+
+// Add credits functions
+export const addCredits = (data) => API.post('/auth/add-credits', data);
+export const removeCredits = (data) => API.post('/auth/remove-credits', data);
+
+// Add password reset function
+export const sendPasswordResetLink = (data) => API.post('/auth/send-password-reset-link', data);
+
+// Add delete user function
+export const deleteUser = (data) => API.post('/auth/delete-user');
 
 // Add courses functions
 export const getCourses = () => API.get('/courses');
@@ -36,5 +47,8 @@ export const getClasses = (courseId) => API.get(`/courses/${courseId}/classes`);
 export const addMaterial = (data) => API.post('/courses/materials', data);
 export const deleteMaterial = (id) => API.delete(`/courses/materials/${id}`);
 export const getMaterials = (classId) => API.get(`/courses/classes/${classId}/materials`);
+
+// Add search students function
+export const searchStudents = (username) => API.get('/auth/search-students', { params: { username } });
 
 export default API;

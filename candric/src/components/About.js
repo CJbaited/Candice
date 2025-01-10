@@ -14,7 +14,12 @@ const About = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <motion.div
+      className="min-h-screen bg-gray-100 p-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <div className="container mx-auto space-y-40"> {/* Increased spacing between sections */}
         {/* First Section */}
         <section className="flex flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-8 min-h-[50vh] pt-16"> {/* Half viewport height and extra padding */}
@@ -87,7 +92,7 @@ const About = () => {
           </Link>
         </section>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

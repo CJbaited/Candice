@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import API from '../api';
 import CourseDetailsModal from './CourseDetailsModal';
-import Modal from 'react-modal';
 
 const ManageCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -14,7 +13,6 @@ const ManageCourses = () => {
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isAddClassModalOpen, setIsAddClassModalOpen] = useState(false);
 
   useEffect(() => {
     fetchCourses();
@@ -83,7 +81,7 @@ const ManageCourses = () => {
       await API.post('/courses/classes', classDataToSend);
       setClassData({ course_id: '', unit_title: '', schedule: '', material_id: '' });
       fetchCourses();
-      setIsAddClassModalOpen(false);
+      setIsDrawerOpen(false);
     } catch (error) {
       console.error('Error adding class:', error);
     }

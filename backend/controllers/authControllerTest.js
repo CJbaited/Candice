@@ -92,15 +92,18 @@ const logout = async (req, res) => {
 const checkUser = async (req, res) => {
   const userId = req.session.user.id;
 
-  // Fetch user details from the public.profiles table
   const { data: userData, error: userError } = await supabase
     .from('profiles')
-    .select('id, username, location, role') 
+    .select('id, username, location, role, credits') // Include credits
     .eq('id', userId)
     .single();
 
-  if (userError) return res.status(400).json({ error: userError.message });
+  if (userError) {
+    console.error('Error fetching user data:', userError.message); // Debug log
+    return res.status(400).json({ error: userError.message });
+  }
 
+  console.log('User Data:', userData); // Debug log
   res.status(200).json(userData);
 };
 
@@ -119,4 +122,103 @@ const updateUserProfile = async (req, res) => {
   res.status(200).json({ message: 'Profile updated successfully!', user: data });
 };
 
-module.exports = { signUp, login, logout, checkUser, updateUserProfile };
+const userBalance = async (req, res) => {
+  const userId = req.session.user.id;
+
+  const { data: userData, error: userError } = await supabase
+    .from('profiles')
+    .select('credits') // Include credits
+    .eq('id', userId)
+    .single();
+
+  if (userError) {
+    console.error('Error fetching user data:', userError.message); // Debug log
+    return res.status(400).json({ error: userError.message });
+  }
+
+  console.log('User Data:', userData); // Debug log
+  res.status(200).json(userData);
+};
+
+const searchStudents = async (req, res) => {
+  const { username } = req.query;
+
+  let query = supabase
+    .from('profiles')
+    .select('id, username, location')
+    .is('role', null); // Only fetch students (role = null)
+
+  if (username) {
+    query = query.ilike('username', `%${username}%`);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    return res.status(400).json({ error: error.message });
+  }
+
+  res.status(200).json(data);
+};
+
+const addCredits = async (req, res) => {
+  const { userId, credits } = req.body;
+
+  // Validate input
+  if (!userId || typeof credits !== 'number') {
+    return res.status(400).json({ error: 'Invalid input. Please provide a valid userId and credits.' });
+  }
+
+  // Ensure credits is an integer
+  const creditsInt = parseInt(credits, 10);
+
+  const { data, error } = await supabase.rpc('increment_credits', { user_id: userId, amount: creditsInt });
+
+  if (error) {
+    return res.status(400).json({ error: error.message });
+  }
+
+  res.status(200).json({ message: 'Credits added successfully!', user: data });
+};
+
+const removeCredits = async (req, res) => {
+  const { userId, credits } = req.body;
+
+  // Validate input
+  if (!userId || typeof credits !== 'number') {
+    return res.status(400).json({ error: 'Invalid input. Please provide a valid userId and credits.' });
+  }
+
+  // Ensure credits is an integer
+  const creditsInt = parseInt(credits, 10);
+
+  const { data, error } = await supabase.rpc('increment_credits', { user_id: userId, amount: -creditsInt });
+
+  if (error) {
+    return res.status(400).json({ error: error.message });
+  }
+
+  res.status(200).json({ message: 'Credits removed successfully!', user: data });
+};
+
+const sendPasswordResetLink = async (req, res) => {
+  const { email } = req.body;
+
+  const { error } = await supabase.auth.api.resetPasswordForEmail(email);
+
+  if (error) return res.status(400).json({ error: error.message });
+
+  res.status(200).json({ message: 'Password reset link sent successfully!' });
+};
+
+const deleteUser = async (req, res) => {
+  const { userId } = req.body;
+
+  const { error } = await supabase.auth.api.deleteUser(userId);
+
+  if (error) return res.status(400).json({ error: error.message });
+
+  res.status(200).json({ message: 'User deleted successfully!' });
+};
+
+module.exports = { signUp, login, logout, checkUser, updateUserProfile, userBalance, searchStudents, addCredits, removeCredits, sendPasswordResetLink, deleteUser };

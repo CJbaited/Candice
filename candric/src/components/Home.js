@@ -42,18 +42,29 @@ const Home = () => {
     visible: { opacity: 1, x: 0 },
   };
 
+  const heroTitleVariants = {
+    hidden: { opacity: 0, y: -50 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
     <div className="min-h-screen parallax">
       {/* Top Section */}
       <section className="relative h-screen bg-cover bg-center flex flex-col items-center justify-center" style={{ backgroundImage: "url('/brooke-cagle-g1Kr4Ozfoac-unsplash.jpg')" }}>
         <div className="absolute inset-0 bg-black bg-opacity-30"></div>
         <div className="relative z-10 text-center mt-32">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white mb-8 animate-fade-in leading-tight">
+          <motion.h1
+            className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white mb-8 leading-tight"
+            initial="hidden"
+            animate="visible"
+            variants={heroTitleVariants}
+            transition={{ duration: 1 }}
+          >
             Welcome to the <br className="hidden md:block" /> Learning Platform
-          </h1>
+          </motion.h1>
           <div className="flex space-x-4 mb-16 justify-center">
-            <Link to="/visitor-courses" className="px-6 py-3 border border-white text-white font-semibold rounded-lg shadow-lg backdrop-blur-md hover:bg-[#622240] hover:text-white transition-colors">Start Learning</Link>
-            <Link to="/teachers" className="px-6 py-3 border border-white text-white font-semibold rounded-lg shadow-lg backdrop-blur-md hover:bg-[#622240] hover:text-white transition-colors">Meet Teachers</Link>
+            <Link to="/visitor-courses" className="px-6 py-3 border border-[#622240] text-[#622240] font-semibold rounded-lg shadow-lg backdrop-blur-md hover:bg-[#622240] hover:text-white transition-colors">Start Learning</Link>
+            <Link to="/teachers" className="px-6 py-3 border border-[#622240] text-[#622240] font-semibold rounded-lg shadow-lg backdrop-blur-md hover:bg-[#622240] hover:text-white transition-colors">Meet Teachers</Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-24 px-4">
             <div className="bg-white bg-opacity-20 p-4 border border-white rounded-lg shadow-lg backdrop-blur-md text-center">
@@ -156,7 +167,7 @@ const Home = () => {
               variants={cardVariants}
             >
               <div className="icon-placeholder mb-4">
-                <Clipboard className="w-12 h-12 text-[#622240] mx-auto" />
+                <Clipboard className="w-12 h-12 text-[#622240] mx.auto" />
               </div>
               <h3 className="text-xl font-bold mb-2">Assignments</h3>
               <p className="text-gray-700">You'll receive assignments to complement your learning.</p>
@@ -190,7 +201,7 @@ const Home = () => {
               <p className="text-gray-700">Classes are fully interactive, you may be split into groups, raise hand for questions, games and more.</p>
             </motion.div>
             <motion.div
-              className="bg-white p-8 rounded-lg shadow-lg text-center h-64"
+              className="bg.white p-8 rounded-lg shadow-lg text-center h-64"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}

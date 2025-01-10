@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { loginUser } from '../api';
 
 const Login = () => {
@@ -39,31 +39,42 @@ const Login = () => {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
-            <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
-                <h2 className="text-2xl font-bold mb-6">Login</h2>
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full p-2 mb-4 border rounded"
-                        required
-                    />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={formData.password}
-                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                        className="w-full p-2 mb-4 border rounded"
-                        required
-                    />
-                    <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-                        Login
-                    </button>
-                </form>
-                {message && <p className="mt-4 text-red-600">{message}</p>}
+        <div className="min-h-screen flex">
+            <div className="w-1/2">
+                <img src="/surface-91HFUXYi_Jg-unsplash.jpg" alt="Background" className="w-full h-full object-cover" />
+            </div>
+            <div className="w-1/2 flex items-start justify-center bg-white pt-48">
+                <div className="p-8 w-full max-w-md">
+                    <div className="flex justify-center mb-6">
+                        <img src="/IMG_0104.png" alt="Logo" className="h-16" />
+                    </div>
+                    <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            className="w-full p-2 mb-4 border rounded"
+                            required
+                        />
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            value={formData.password}
+                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                            className="w-full p-2 mb-4 border rounded"
+                            required
+                        />
+                        <button type="submit" className="w-full bg-[#622240] text-white py-2 rounded hover:bg-[#501a33] transition-colors">
+                            Login
+                        </button>
+                    </form>
+                    {message && <p className="mt-4 text-red-600">{message}</p>}
+                    <div className="text-center mt-4">
+                        <Link to="/signup" className="text-[#622240] underline">Don't have an account? Sign up</Link>
+                    </div>
+                </div>
             </div>
         </div>
     );

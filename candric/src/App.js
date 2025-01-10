@@ -26,12 +26,15 @@ import ManageCourses from './components/ManageCourses';
 import ManageStudents from './components/ManageStudents';
 import ManageMaterials from './components/ManageMaterials';
 import TeacherProfile from './components/TeacherProfile';
+import ScrollToTop from './components/ScrollToTop'; // Import the ScrollToTop component
+import RefundPolicy from './components/RefundPolicy';
 
 const App = () => {
   return (
     <Router>
+      <ScrollToTop /> {/* Add ScrollToTop component here */}
       <ConditionalNavbar />
-      <div className="pt-16"> {/* This adds padding to avoid content being hidden behind the navbar */}
+      <div> {/* This adds padding to avoid content being hidden behind the navbar */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -47,6 +50,7 @@ const App = () => {
           <Route path="/faq" element={<FAQ />} />
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/teachers" element={<Teachers />} />
           <Route path="/loading" element={<Loading />} />
           <Route path="/complete-profile" element={<CompleteProfile />} />
@@ -64,14 +68,14 @@ const App = () => {
 
 const ConditionalNavbar = () => {
   const location = useLocation();
-  const publicRoutes = ['/', '/login', '/signup', '/visitor-courses', '/about', '/contact', '/faq', '/terms', '/privacy', '/teachers'];
+  const publicRoutes = ['/', '/visitor-courses', '/about', '/contact', '/faq', '/terms', '/privacy', '/teachers', '/refund-policy'];
 
   return publicRoutes.includes(location.pathname) ? <Navbar /> : null;
 };
 
 const ConditionalFooter = () => {
   const location = useLocation();
-  const publicRoutes = ['/', '/login', '/signup', '/visitor-courses', '/about', '/contact', '/faq', '/terms', '/privacy', '/teachers'];
+  const publicRoutes = ['/', '/visitor-courses', '/about', '/contact', '/faq', '/terms', '/privacy', '/teachers', '/refund-policy'];
 
   return publicRoutes.includes(location.pathname) ? <Footer /> : null;
 };

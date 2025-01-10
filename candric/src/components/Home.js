@@ -60,7 +60,8 @@ const Home = () => {
             variants={heroTitleVariants}
             transition={{ duration: 1 }}
           >
-            Welcome to the <br className="hidden md:block" /> Learning Platform
+            Welcome to the <br className="hidden md:block" /> 
+            <span className="text-[#622240] underline">Learning</span> Platform
           </motion.h1>
           <div className="flex space-x-4 mb-16 justify-center">
             <Link to="/visitor-courses" className="px-6 py-3 border border-[#622240] text-[#622240] font-semibold rounded-lg shadow-lg backdrop-blur-md hover:bg-[#622240] hover:text-white transition-colors">Start Learning</Link>
@@ -72,7 +73,7 @@ const Home = () => {
                 <BookOpen className="w-12 h-12 text-white mx-auto" />
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Quality Education</h3>
-              <p className="text-white">Access high-quality courses designed by experts.</p>
+              <p className="text-white">Access high-quality courses designed.</p>
             </div>
             <div className="bg-white bg-opacity-20 p-4 border border-white rounded-lg shadow-lg backdrop-blur-md text-center">
               <div className="icon-placeholder mb-4">
@@ -86,14 +87,14 @@ const Home = () => {
                 <Clipboard className="w-12 h-12 text-white mx-auto" />
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Expert Instructors</h3>
-              <p className="text-white">Learn from industry professionals and experienced teachers.</p>
+              <p className="text-white">Learn from professionals and experienced teachers.</p>
             </div>
             <div className="bg-white bg-opacity-20 p-4 border border-white rounded-lg shadow-lg backdrop-blur-md text-center">
               <div className="icon-placeholder mb-4">
                 <FileText className="w-12 h-12 text-white mx-auto" />
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">Community Support</h3>
-              <p className="text-white">Join a community of learners and get support.</p>
+              <h3 className="text-lg font-bold text-white mb-2">Dashboard</h3>
+              <p className="text-white">Tools to complement your learning journey.</p>
             </div>
           </div>
         </div>
@@ -167,7 +168,7 @@ const Home = () => {
               variants={cardVariants}
             >
               <div className="icon-placeholder mb-4">
-                <Clipboard className="w-12 h-12 text-[#622240] mx.auto" />
+                <Clipboard className="w-12 h-12 text-[#622240] mx-auto" />
               </div>
               <h3 className="text-xl font-bold mb-2">Assignments</h3>
               <p className="text-gray-700">You'll receive assignments to complement your learning.</p>
